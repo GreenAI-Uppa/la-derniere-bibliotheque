@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Jouer</title>
+        <!--<link href="https://useiconic.com/open/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    </head>
+    <body style="height: 100%;">
+        <div style="min-height: 100%; position: relative; bottom: 0;">
+            <div id="grand_ecran" class="text-bg-light p-3 sticky-top" style="display: none;">
+                <a href="/partage"><img src="https://raw.githubusercontent.com/GreenAI-Uppa/GreenAI-Uppa.github.io/main/assets/horizontal_dark_logo.png" class="img-fluid" style="width: 20%;" alt=""></a>
+                <a href="/partage"><button type="button" class="btn btn-outline-success">Accueil</button></a>
+                <a href="/partage/jeu/"><button type="button" class="btn btn-outline-success">Jouer</button></a>
+                <a href="/partage/tags/"><button type="button" class="btn btn-outline-success">Les tags</button></a>
+                <a href="/partage/rechercher/"><button type="button" class="btn btn-outline-success">Rechercher</button></a>
+                <a href="/partage/sources/allsources/"><button type="button" class="btn btn-outline-success">Nos sources</button></a>
+                <!--<a href="/partage/more/contribute/"><button type="button" class="btn btn-outline-success">Contribuer</button></a>-->
+                <a href="/partage/more/leProjet/"><button type="button" class="btn btn-outline-success">Le projet</button></a>
+            </div>
+
+            <div id="petit_ecran" style="display: none;">
+                <nav class="navbar navbar-expand-lg bg-light">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="/partage">
+                            <img src="https://raw.githubusercontent.com/GreenAI-Uppa/GreenAI-Uppa.github.io/main/assets/horizontal_dark_logo.png" class="img-fluid" width="160" alt="">
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                            <div class="navbar-nav">
+                                <a class="nav-link" href="/partage">Accueil</a>
+                                <a class="nav-link active" aria-current="page" href="/partage/jeu/">Jouer</a>
+                                <a class="nav-link" href="/partage/tags/">Les tags</a>
+                                <a class="nav-link" href="/partage/rechercher/">Rechercher</a>
+                                <a class="nav-link" href="/partage/sources/allsources/">Nos sources</a>
+                                <!--<a class="nav-link" href="/partage/more/contribute/">Contribuer</a>-->
+                                <a class="nav-link" href="/partage/more/leProjet/">Le projet</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                
+            </div>
+
+            <script>
+                var grand_ecran = document.getElementById('grand_ecran');
+                var petit_ecran = document.getElementById('petit_ecran');
+                if (screen.width > 800) {
+                    grand_ecran.style.display = 'block';
+                    petit_ecran.style.display = 'none';
+                } else {
+                    petit_ecran.style.display = 'block';
+                    grand_ecran.style.display = 'none';
+                }
+            </script>
+
+            {% if objet_inutile %}
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Principes et règles du jeu</h3><br>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Le vrai du faux</h5><br>
+                                <p>
+                                    Devant vous va s'afficher deux contenus, 
+                                    l'un vrai et l'autre faux. À vous de discerner le contenu vrai du faux. Vous aurez en tout {{ nombre_question }}
+                                    choix à faire. Bonne chance !!!
+                                </p><br>
+                                <div class="d-grid gap-2 col-6 mx-auto">
+                                    <button type="button" class="btn btn-success" onclick="location.href='/partage/jouer'">Commencer à jouer</button>
+                                </div><br>
+                                <div id="afficher1">
+                                    <div class="d-grid gap-2 col-6 mx-auto">
+                                        <button id="a1" type="button" class="btn btn-success" onclick="tab1(this.id)">Afficher le tableau des scores</button>
+                                    </div><br>
+                                </div>
+                                <div id="masquer1">
+                                    <div class="d-grid gap-2 col-6 mx-auto">
+                                        <button id="m1" type="button" class="btn btn-success" onclick="tab1(this.id)">Masquer le tableau des scores</button>
+                                    </div><br>
+                                </div>
+                                <div class="card" id="tab_score_1">
+                                    <div class="card-body">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Pseudo</th>
+                                                    <th scope="col">Score</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for one_pseudo_score in pseudo_score_1 %}
+                                                    <tr>
+                                                        <th scope="row">{{ forloop.counter }}</th>
+                                                        {% for item in one_pseudo_score %}
+                                                            <td>{{ item }}</td>
+                                                        {% endfor %}
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>   
+                                </div>
+                            </div>
+                        </div><br>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Vrai ou faux</h5><br>
+                                <p>
+                                    Devant vous va s'afficher un contenu, 
+                                    Ce contenu est soit vrai, soit faux, à vous de bien choisir. Vous aurez en tout {{ nombre_question}}
+                                    choix à faire. Bonne chance !!!
+                                </p><br>
+                                <div class="d-grid gap-2 col-6 mx-auto">
+                                    <button type="button" class="btn btn-success" onclick="location.href='/partage/jouer2'">Commencer à jouer</button>
+                                </div><br>
+                                <div id="afficher2">
+                                    <div class="d-grid gap-2 col-6 mx-auto">
+                                        <button id="a2" type="button" class="btn btn-success" onclick="tab2(this.id)">Afficher le tableau des scores</button>
+                                    </div><br>
+                                </div>
+                                <div id="masquer2">
+                                    <div class="d-grid gap-2 col-6 mx-auto">
+                                        <button id="m2" type="button" class="btn btn-success" onclick="tab2(this.id)">Masquer le tableau des scores</button>
+                                    </div><br>
+                                </div>
+                                <div class="card" id="tab_score_2">
+                                    <div class="card-body">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Pseudo</th>
+                                                    <th scope="col">Score</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for one_pseudo_score in pseudo_score_2 %}
+                                                    <tr>
+                                                        <th scope="row">{{ forloop.counter }}</th>
+                                                        {% for item in one_pseudo_score %}
+                                                            <td>{{ item }}</td>
+                                                        {% endfor %}
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            
+            {% if tab_content_utilise %}
+                {% for content in tab_content_utilise%}
+                    {% for affichage_rand in tab_affichage_rand %}
+                        {% if forloop.counter == forloop.parentloop.counter %}
+                            <div class="card" id="block{{ forloop.counter0 }}">
+                                <div class="card-body">
+                                    <h3 class="card-title">Choisissez la proposition qui vous semble juste</h3><br>
+                                    <div id="bloc_jeu_grand_ecran_{{ forloop.counter0 }}" style="display: none;">
+                                        <div class="row justify-content-around">
+                                            {% if affichage_rand == 0 %}
+                                                <div class="col-5">
+                                                    <div class="card" id="rep1_{{ forloop.counter0 }}" onclick="select(this.id)">
+                                                        <div class="card-body">
+                                                            <p class="card-text text-justify text-center">{{ content.text }}</p>
+                                                        </div>
+                                                    </div>   
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="card" id="rep2_{{ forloop.counter0 }}" onclick="select(this.id)">
+                                                        <div class="card-body">
+                                                            <p class="card-text text-justify text-center">{{ content.text_game }}</p>
+                                                        </div>
+                                                    </div>   
+                                                </div>
+                                            {% else %}
+                                                <div class="col-5">
+                                                    <div class="card" id="rep1_{{ forloop.counter0 }}" onclick="select(this.id)">
+                                                        <div class="card-body">
+                                                            <p class="card-text text-justify text-center">{{ content.text_game }}</p>
+                                                        </div>
+                                                    </div>   
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="card" id="rep2_{{ forloop.counter0 }}" onclick="select(this.id)">
+                                                        <div class="card-body">
+                                                            <p class="card-text text-justify text-center">{{ content.text }}</p>
+                                                        </div>
+                                                    </div>   
+                                                </div>
+                                            {% endif %}
+                                        </div> 
+                                        <br>
+                                        <div class="d-grid gap-2 col-4 mx-auto">
+                                            <button id="{{ forloop.counter0 }}" type="button" class="btn btn-success" onclick="valider(this.id)">Valider</button>
+                                        </div><br>
+                                    </div>
+                                    <div id="bloc_jeu_petit_ecran_{{ forloop.counter0 }}" style="display: none;">
+                                        <div class="card" id="rep1_p_{{ forloop.counter0 }}" onclick="select(this.id)">
+                                            <div class="card-body">
+                                                <p class="card-text text-justify text-center">
+                                                    {% if affichage_rand == 0 %}
+                                                        {{ content.text }}
+                                                    {% else %}
+                                                        {{ content.text_game }}
+                                                    {% endif %}
+                                                </p>
+                                            </div>
+                                        </div><br>
+                                        <div class="d-grid gap-2 col-4 mx-auto">
+                                            <button id="p_{{ forloop.counter0 }}" type="button" class="btn btn-success" onclick="valider(this.id)">Valider</button>
+                                        </div><br>
+                                        <div class="card" id="rep2_p_{{ forloop.counter0 }}" onclick="select(this.id)">
+                                            <div class="card-body">
+                                                <p class="card-text text-justify text-center">
+                                                    {% if affichage_rand == 0 %}
+                                                        {{ content.text_game }}
+                                                    {% else %}
+                                                        {{ content.text }}
+                                                    {% endif %}
+                                                </p>
+                                            </div>
+                                        </div><br>
+                                    </div>
+                                    <script>
+                                        var bloc_jeu_grand_ecran = document.getElementById('bloc_jeu_grand_ecran_{{ forloop.counter0 }}');
+                                        var bloc_jeu_petit_ecran = document.getElementById('bloc_jeu_petit_ecran_{{ forloop.counter0 }}');
+                                        if (screen.width > 800) {
+                                            bloc_jeu_grand_ecran.style.display = 'block';
+                                            bloc_jeu_petit_ecran.style.display = 'none';
+                                        } else {
+                                            bloc_jeu_petit_ecran.style.display = 'block';
+                                            bloc_jeu_grand_ecran.style.display = 'none';
+                                        }
+                                    </script>
+                                    <div class="progress" style="height: 4px;">
+                                        <div id="progressbar_{{ forloop.counter }}" class="progress-bar bg-success" role="progressbar" aria-label="Avancement question" aria-valuenow="{{ forloop.counter }}" aria-valuemin="0" aria-valuemax="{{ nombre_question }}"></div>
+                                        <script>
+                                            var progressbar = document.getElementById("progressbar_{{ forloop.counter }}");
+                                            var pourcent = (parseInt('{{ forloop.counter }}')*100) / parseInt('{{ nombre_question }}');
+                                            progressbar.style.width = `${pourcent}%` 
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                            <a name="les_reps_{{ forloop.counter0 }}"></a>
+                            <div class="card" id="true_{{ forloop.counter0 }}">
+                                <div class="card-body">
+                                    <h3 class="card-title text-center">Bonne réponse !</h3><br>
+                                    <div class="d-grid gap-2 col-4 mx-auto">
+                                        <button id="suivant_{{ forloop.counter0 }}" type="button" class="btn btn-success" onclick="suivant(this.id)">Suivant</button>
+                                    </div><br>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            {% if content in content_http_list %}
+                                                <h5 class="card-title">{{ content.source }}
+                                                    <a href="{{ content.location }}" target="_blank" style="color: black;"><button type="button" class="btn">
+                                                        lien</button></a>
+                                                </h5>
+                                            {% else %}
+                                                <h5 class="card-title">{{ content.source }}
+                                                    <button class="btn" type="button" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ content.location }}">
+                                                        Marque page</button>
+                                                </h5>
+                                            {% endif %}
+                                            <h6 class="card-subtitle text-muted mb-2">
+                                                {% for author in content.source.auteur.all %}
+                                                    <span class="badge text-bg-light">{{ author }}</span>
+                                                {% endfor %}
+
+                                            </h6>
+                                            <p class="card-text">{{ content.text|linebreaks }}</p>
+                                            <div id="tags">
+                                                {% for letag in content.tag.all %}
+                                                    <span class="badge text-bg-success">{{ letag }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card" id="false_{{ forloop.counter0 }}">
+                                <div class="card-body">
+                                    <h3 class="card-title text-center">Mauvaise réponse !</h3><br>
+                                    <div class="d-grid gap-2 col-4 mx-auto">
+                                        <button id="suivant_{{ forloop.counter0 }}" type="button" class="btn btn-success" onclick="suivant(this.id)">Suivant</button>
+                                    </div><br>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            {% if content in content_http_list %}
+                                                <h3 class="card-title">{{ content.source }}
+                                                    <a href="{{ content.location }}" target="_blank" style="color: black;"><button type="button" class="btn">
+                                                        lien</button></a>
+                                                </h3>
+                                            {% else %}
+                                                <h3 class="card-title">{{ content.source }}
+                                                    <button class="btn" type="button" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ content.location }}">
+                                                        Marque page</button>
+                                                </h3>
+                                            {% endif %}
+                                            <h6 class="card-subtitle text-muted mb-2">
+                                                {% for author in content.source.auteur.all %}
+                                                    <span class="badge text-bg-light">{{ author }}</span>
+                                                {% endfor %}
+
+                                            </h6>
+                                            <p class="card-text">{{ content.text|linebreaks }}</p>
+                                            <div id="tags">
+                                                {% for letag in content.tag.all %}
+                                                    <span class="badge text-bg-success">{{ letag }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                <div class="card" id="block_final">
+                    <div class="card-body">
+                        <h3 class="card-title">Le jeu est fini !!!</h3><br>
+                        <form action="/partage/envoyer/" method="post">
+                            {% csrf_token %}
+                            <div id="score_in"></div>
+                            <div id="id_content"></div>
+                            <div id="score_joueur"></div>
+                            <p class="card-text">Votre score est : <span id="score_print"></span>/{{ nombre_question }}</p>
+                            <p class="card-text">Saisissez votre pseudo : <input type="text" id="pseudo" name="pseudo" required></p>
+                            <button type="submit" class="btn btn-success">Confirmer</button>
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if pseudo_score %}
+                <div class="card" id="block_final">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Les meilleurs scores</h3><br>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Pseudo</th>
+                                    <th scope="col">Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for one_pseudo_score in pseudo_score %}
+                                    <tr>
+                                        <th scope="row">{{ forloop.counter }}</th>
+                                        {% for item in one_pseudo_score %}
+                                            <td>{{ item }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="d-grid gap-2 col-6 mx-auto">
+                            <button type="button" class="btn btn-success" onclick="location.href='/partage/jeu/'">Retour à l'accueil de jeu</button>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+                
+            <footer class="text-center bg-light" style="width: 100%; border-top: 1px solid grey;">
+                <div class="small text-muted">
+                    <small>Ce(tte) œuvre est mise à disposition selon les termes de la <a class="link-success" rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Licence Creative Commons Attribution - Pas d'Utilisation Commerciale - Pas de Modification 4.0 International</a>.</small>
+                </div>
+            </footer>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    </body>
+</html>
+<script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+    '{% if objet_inutile %}'
+        var afficher1 = document.getElementById('afficher1');
+        var afficher2 = document.getElementById('afficher2');
+        var masquer1 = document.getElementById('masquer1');
+        var masquer2 = document.getElementById('masquer2');
+        var tableau_score_1 = document.getElementById('tab_score_1');
+        var tableau_score_2 = document.getElementById('tab_score_2');
+
+        masquer1.style.display = "none";
+        masquer2.style.display = "none";
+        tableau_score_1.style.display = "none";
+        tableau_score_2.style.display = "none";
+
+        function tab1(id) {
+            if (id == 'a1') {
+                masquer1.style.display = "block";
+                tableau_score_1.style.display = "block";
+                afficher1.style.display = "none";
+            }
+            if (id == 'm1') {
+                masquer1.style.display = "none";
+                tableau_score_1.style.display = "none";
+                afficher1.style.display = "block";
+            }
+            
+        }
+
+        function tab2(id) {
+            if (id == 'a2') {
+                masquer2.style.display = "block";
+                tableau_score_2.style.display = "block";
+                afficher2.style.display = "none";
+            }
+            if (id == 'm2') {
+                masquer2.style.display = "none";
+                tableau_score_2.style.display = "none";
+                afficher2.style.display = "block";
+            }
+        }
+    '{% endif %}'
+
+
+    '{% if tab_content_utilise %}'
+        // on cache tous les blocks de la question 2 à nombre_question
+        for (let i = 1; i < parseInt('{{ nombre_question }}'); i++) {
+            var block = document.getElementById(`block${i}`);
+            block.style.display = "none";
+            console.log('toto');
+        }
+        
+        // On désactive tous les boutons valider
+        // On ajoute un effet de mouseover sur les eléments de reponse
+        // On cache tous les blocks de résultat
+        for (let i = 0; i < parseInt('{{ nombre_question }}'); i++) {   
+            if (screen.width > 800) {
+                var button = document.getElementById(i);
+                button.disabled=true;
+                var rep1 = document.getElementById(`rep1_${i}`);
+                var rep2 = document.getElementById(`rep2_${i}`);
+                rep1.addEventListener("mouseover", function( event ) {
+                    event.target.style.cursor = "pointer";
+                });
+                rep2.addEventListener("mouseover", function( event ) {
+                    event.target.style.cursor = "pointer";
+                });
+            } else {
+                var button = document.getElementById(`p_${i}`);
+                button.disabled=true;
+                var rep1 = document.getElementById(`rep1_p_${i}`);
+                var rep2 = document.getElementById(`rep2_p_${i}`);
+                rep1.addEventListener("mouseover", function( event ) {
+                    event.target.style.cursor = "pointer";
+                });
+                rep2.addEventListener("mouseover", function( event ) {
+                    event.target.style.cursor = "pointer";
+                });
+            }
+            var block_resultat_true = document.getElementById(`true_${i}`);
+            var block_resultat_false = document.getElementById(`false_${i}`);
+            block_resultat_true.style.display= "none";
+            block_resultat_false.style.display= "none";
+        }
+
+        // On cache le block d'affichage du score
+        var block_final = document.getElementById('block_final')
+        block_final.style.display = 'none';
+
+        // Quand un élément est sélectionné on lui met une bordure verte et on active le bouton valider
+        function select(clicked_id) {
+            if (screen.width > 800) {
+                var parse_str = clicked_id.split('_');
+                var looper = parse_str[1];
+                var rep = document.getElementById(clicked_id);
+                var button = document.getElementById(looper);
+                if (clicked_id == `rep1_${looper}`) {
+                    var rep2 = document.getElementById(`rep2_${looper}`);
+                    if (rep2.style.border == "2px solid green") {
+                        rep2.style.border = "";
+                    }
+                    rep.style.border = "2px solid green";
+                    button.disabled=false;
+                }
+                if (clicked_id == `rep2_${looper}`) {
+                    var rep1 = document.getElementById(`rep1_${looper}`);
+                    if (rep1.style.border == "2px solid green") {
+                        rep1.style.border = "";
+                    }
+                    rep.style.border = "2px solid green";
+                    button.disabled=false;
+                }
+            } else {
+                var parse_str = clicked_id.split('_');
+                var looper = parse_str[2];
+                var rep = document.getElementById(clicked_id);
+                var button = document.getElementById(`p_${looper}`);
+                if (clicked_id == `rep1_p_${looper}`) {
+                    var rep2 = document.getElementById(`rep2_p_${looper}`);
+                    if (rep2.style.border == "2px solid green") {
+                        rep2.style.border = "";
+                    }
+                    rep.style.border = "2px solid green";
+                    button.disabled=false;
+                }
+                if (clicked_id == `rep2_p_${looper}`) {
+                    var rep1 = document.getElementById(`rep1_p_${looper}`);
+                    if (rep1.style.border == "2px solid green") {
+                        rep1.style.border = "";
+                    }
+                    rep.style.border = "2px solid green";
+                    button.disabled=false;
+                }
+            }
+        }
+
+        var tab_affichage_rand = []; // Tableau pour savoir si la bonne réponse est à gauche ou à droite
+        '{% for affichage_rand in tab_affichage_rand %}'
+            tab_affichage_rand.push('{{ affichage_rand }}')
+        '{% endfor %}'
+
+        var tab_content_utilise = []; // Tableau pour connaitre l'id des contenus qui sont passé
+        '{% for content in tab_content_utilise %}'
+            tab_content_utilise.push('{{ content.id }}')
+        '{% endfor %}'
+
+        var tab_score = [] // Tableau qui contient pour chaque question true si le joueur a eu juste et false sinon
+
+        var score = 0;
+
+        // Fonction qui incrémente le score et affiche le bloc de bonne réponse si la reponse est juste
+        // et qui affiche le bloc de mauvaise réponse sinon
+        function valider(clicked_id) {
+            if (screen.width > 800) {   
+                var block_resultat_true = document.getElementById(`true_${clicked_id}`);
+                var block_resultat_false = document.getElementById(`false_${clicked_id}`);
+            } else {
+                var parse_str = clicked_id.split('_');
+                var loop = parse_str[1];
+                var block_resultat_true = document.getElementById(`true_${loop}`);
+                var block_resultat_false = document.getElementById(`false_${loop}`);
+            }
+            // On désactive le bouton valider et on le cache
+            var button = document.getElementById(clicked_id);
+            button.disabled=true;
+            button.style.display = "none";
+            // Une fois validée le joueur ne peut plus revenir sur son choix
+            if (screen.width > 800) {   
+                var rep1 = document.getElementById(`rep1_${clicked_id}`);
+                var rep2 = document.getElementById(`rep2_${clicked_id}`);
+                var index = clicked_id;
+            } else {
+                var parse_str = clicked_id.split('_');
+                var loop = parse_str[1];
+                console.log(loop);
+                var rep1 = document.getElementById(`rep1_p_${loop}`);
+                var rep2 = document.getElementById(`rep2_p_${loop}`);
+                var index = loop;
+            }
+            rep1.onclick = null; 
+            rep2.onclick = null;
+            var testeur = 0; // cette variable permet de ne rentrer que dans une seule boucle
+            if ((rep1.style.border == "2px solid green") && (tab_affichage_rand[index] == "0") && (testeur == 0)) {
+                block_resultat_true.style.display= "block";
+                score = score + 1;
+                tab_score.push('true');
+                testeur++;
+            }
+            if ((rep1.style.border == "2px solid green") && (tab_affichage_rand[index] == "1") && (testeur == 0)) {
+                block_resultat_false.style.display= "block";
+                rep1.style.border = "2px solid red";
+                rep2.style.border = "2px solid green";
+                tab_score.push('false');
+                testeur++;
+            }
+            if ((rep2.style.border == "2px solid green") && (tab_affichage_rand[index] == "1") && (testeur == 0)) {
+                block_resultat_true.style.display= "block";
+                score = score + 1;
+                tab_score.push('true');
+                testeur++;
+            }
+            if ((rep2.style.border == "2px solid green") && (tab_affichage_rand[index] == "0") && (testeur == 0)) {
+                block_resultat_false.style.display= "block";
+                rep1.style.border = "2px solid green";
+                rep2.style.border = "2px solid red";
+                tab_score.push('false');
+                testeur++;
+            }
+            if (screen.width > 800) {   
+                document.location.href = `#les_reps_${clicked_id}`;
+            } else {
+                var parse_str = clicked_id.split('_');
+                var loop = parse_str[1];
+                document.location.href = `#les_reps_${loop}`;
+            }
+        }
+
+        // Cache la question actuelle et affiche la prochaine
+        function suivant(clicked_id) {
+            var parse_str = clicked_id.split('_');
+            var id = parse_str[1];
+            var block_ancien = document.getElementById(`block${id}`);
+            var block_suivant = document.getElementById(`block${parseInt(id) + 1}`);
+            var block_false = document.getElementById(`false_${id}`);
+            var block_true = document.getElementById(`true_${id}`);
+            block_false.style.display = "none";
+            block_true.style.display = "none";
+            block_ancien.style.display = "none";
+            if (parseInt(id) < (parseInt('{{ nombre_question }}') - 1)) {
+                block_suivant.style.display = "block";  
+            }
+            // Si on est sur la dernière question on affiche le bloc final (score + demande de saisie du pseudo)
+            if (id == (parseInt('{{ nombre_question }}') - 1)) {
+                var div_score_in = document.getElementById("score_in");
+                var div_id_content = document.getElementById("id_content");
+                var div_score_joueur = document.getElementById("score_joueur");
+                var score_print = document.getElementById("score_print");
+                // On insère dans le formulaire discrètement les id des questions pour les traiter coté serveur
+                for (let i = 0; i < tab_content_utilise.length; i++) {
+                    const element = tab_content_utilise[i];
+                    div_id_content.innerHTML += `<input type="hidden" name="id_${i}" id="id_${i}" value="${element}">`;
+                }
+                // On insère dans le formulaire discrètement les résultats des questions pour les traiter coté serveur
+                for (let i = 0; i < tab_score.length; i++) {
+                    const element = tab_score[i];
+                    div_score_in.innerHTML += `<input type="hidden" name="score_${i}" id="score_${i}" value="${element}">`;
+                }
+                div_score_joueur.innerHTML += `<input type="hidden" name="score" id="score" value="${score}">`;
+                score_print.innerHTML += score;
+                block_final.style.display = 'block'; // affichage du bloc final
+                document.getElementById('score').value = score;
+            }
+        }
+    '{% endif %}'
+</script>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Rechercher</title>
+        <!--<link href="https://useiconic.com/open/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    </head>
+    <body style="height: 100%;">
+        <div style="min-height: 100%; position: relative; bottom: 0;">
+            <div class="sticky-top">
+                <div id="grand_ecran" class="text-bg-light p-3" style="display: none;">
+                    <a href="/partage"><img src="https://raw.githubusercontent.com/GreenAI-Uppa/GreenAI-Uppa.github.io/main/assets/horizontal_dark_logo.png" class="img-fluid" style="width: 20%;" alt=""></a>
+                    <a href="/partage"><button type="button" class="btn btn-outline-success">Accueil</button></a>
+                    <a href="/partage/jeu/"><button type="button" class="btn btn-outline-success">Jouer</button></a>
+                    <a href="/partage/tags"><button type="button" class="btn btn-outline-success">Les tags</button></a>
+                    <a href="/partage/rechercher/"><button type="button" class="btn btn-outline-success">Rechercher</button></a>
+                    <a href="/partage/sources/allsources/"><button type="button" class="btn btn-outline-success">Nos sources</button></a>
+                    <!--<a href="/partage/more/contribute/"><button type="button" class="btn btn-outline-success">Contribuer</button></a>-->
+                    <a href="/partage/more/leProjet/"><button type="button" class="btn btn-outline-success">Le projet</button></a>
+                </div>
+
+                <div id="petit_ecran" style="display: none;">
+                    <nav class="navbar navbar-expand-lg bg-light">
+                        <div class="container-fluid">
+                            <a class="navbar-brand" href="/partage">
+                            <img src="https://raw.githubusercontent.com/GreenAI-Uppa/GreenAI-Uppa.github.io/main/assets/horizontal_dark_logo.png" class="img-fluid" width="160" alt="">
+                        </a>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                                <div class="navbar-nav">
+                                    <a class="nav-link" href="/partage">Accueil</a>
+                                    <a class="nav-link" href="/partage/jeu/">Jouer</a>
+                                    <a class="nav-link" href="/partage/tags/">Les tags</a>
+                                    <a class="nav-link active" aria-current="page" href="/partage/rechercher/">Rechercher</a>
+                                    <a class="nav-link" href="/partage/sources/allsources/">Nos sources</a>
+                                    <!--<a class="nav-link" href="/partage/more/contribute/">Contribuer</a>-->
+                                    <a class="nav-link" href="/partage/more/leProjet/">Le projet</a>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                    
+                </div>
+        
+                <script>
+                    var grand_ecran = document.getElementById('grand_ecran');
+                    var petit_ecran = document.getElementById('petit_ecran');
+                    if (screen.width > 800) {
+                        grand_ecran.style.display = 'block';
+                        petit_ecran.style.display = 'none';
+                    } else {
+                        petit_ecran.style.display = 'block';
+                        grand_ecran.style.display = 'none';
+                    }
+                </script>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text" id="basic-addon1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                </svg>
+                            </span>
+                            <input id="search" type="text" class="form-control" placeholder="Entrez votre recherche" aria-label="Username" aria-describedby="basic-addon1" value="{% if sentence %}{{ sentence }}{% endif %}">
+                            <button id="bouton" class="btn btn-outline-success" type="button" id="button-addon2" onclick="envoyer()">Rechercher</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if tab_content %}
+                <div class="card">
+                    <div class="card-body">
+                        {% for dist in distance %}
+                            {% for c in tab_content %}
+                                {% if forloop.counter == forloop.parentloop.counter %}
+                                    <div class="card">
+                                        <div class="card-body">
+                                            {% if c in content_http_list %}
+                                                <h5 class="card-title"><a href="/partage/sources/{{ c.source }}" style="text-decoration: none; color: black;">{{ c.source }}</a>
+                                                    <a href="{{ c.location }}" target="_blank" style="color: black;"><button type="button" class="btn">
+                                                        lien</button></a>
+                                                </h5>
+                                            {% else %}
+                                                <h5 class="card-title"><a href="/partage/sources/{{ c.source }}" style="text-decoration: none; color: black;">{{ c.source }}</a>
+                                                    <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ c.location }}">
+                                                    Marque page</button>                                             
+                                                </h5>
+                                            {% endif %}
+                                            <h6 class="card-subtitle text-muted mb-2">
+                                                {% for author in c.source.auteur.all %}
+                                                    <a href="/partage/author/{{ author }}"><span class="badge text-bg-light">{{ author }}</span></a>
+                                                {% endfor %}
+
+                                            </h6>
+                                            <p class="card-text">{{ c.text|linebreaks }}</p>
+                                            <div id="tags">
+                                                {% for letag in c.tag.all %}
+                                                <a href="/partage/{{ letag }}/contenus/"><span class="badge text-bg-success">{{ letag }}</span></a>
+                                                {% endfor %}
+                                            </div>
+                                            <br>
+                                            <a href="/../admin/partage/content/{{ c.id }}/change/" target="_blank"><svg style="color: black;" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                            </svg></a></p>
+                                        </div>
+                                    </div><br> 
+                                {% endif %}
+                            {% endfor %}    
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            
+            <footer class="text-center bg-light" style="width: 100%; border-top: 1px solid grey;">
+                <div class="small text-muted">
+                    <small>Ce(tte) œuvre est mise à disposition selon les termes de la <a class="link-success" rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Licence Creative Commons Attribution - Pas d'Utilisation Commerciale - Pas de Modification 4.0 International</a>.</small>
+                </div>
+            </footer>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    </body>
+</html>
+<script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    function envoyer() {
+        var sentence = document.getElementById('search').value
+        var url = '/partage/rechercher/'+sentence
+        window.location = url
+    }
+    var button = document.getElementById("bouton");
+    var textBox = document.getElementById("search");
+    textBox.addEventListener("keyup", function (event) {
+        if (event.keyCode == 13) {
+            button.click();
+        }
+    });
+</script>

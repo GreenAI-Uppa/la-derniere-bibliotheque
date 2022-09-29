@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Les tags</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.18/c3.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.16.0/d3.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/c3@0.7.20/c3.js"></script>
+        <!--<link href="https://useiconic.com/open/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        
+    </head>
+    <body style="height: 100%;">
+        <div style="min-height: 100%; position: relative; bottom: 0;">
+            <div id="grand_ecran" class="text-bg-light p-3 sticky-top" style="display: none;">
+                <a href="/partage"><img src="https://raw.githubusercontent.com/GreenAI-Uppa/GreenAI-Uppa.github.io/main/assets/horizontal_dark_logo.png" class="img-fluid" style="width: 20%;" alt=""></a>
+                <a href="/partage"><button type="button" class="btn btn-outline-success">Accueil</button></a>
+                <a href="/partage/jeu/"><button type="button" class="btn btn-outline-success">Jouer</button></a>
+                <a href="/partage/tags/"><button type="button" class="btn btn-outline-success">Les tags</button></a>
+                <a href="/partage/rechercher/"><button type="button" class="btn btn-outline-success">Rechercher</button></a>
+                <a href="/partage/sources/allsources/"><button type="button" class="btn btn-outline-success">Nos sources</button></a>
+                <!--<a href="/partage/more/contribute/"><button type="button" class="btn btn-outline-success">Contribuer</button></a>-->
+                <a href="/partage/more/leProjet/"><button type="button" class="btn btn-outline-success">Le projet</button></a>
+            </div>
+
+            <div id="petit_ecran" style="display: none;" class="sticky-top">
+                <nav class="navbar navbar-expand-lg bg-light">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="/partage">
+                            <img src="https://raw.githubusercontent.com/GreenAI-Uppa/GreenAI-Uppa.github.io/main/assets/horizontal_dark_logo.png" class="img-fluid" width="160" alt="">
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                            <div class="navbar-nav">
+                                <a class="nav-link" href="/partage">Accueil</a>
+                                <a class="nav-link" href="/partage/jeu/">Jouer</a>
+                                <a class="nav-link active" aria-current="page" href="/partage/tags/">Les tags</a>
+                                <a class="nav-link" href="/partage/rechercher/">Rechercher</a>
+                                <a class="nav-link" href="/partage/sources/allsources/">Nos sources</a>
+                                <!--<a class="nav-link" href="/partage/more/contribute/">Contribuer</a>-->
+                                <a class="nav-link" href="/partage/more/leProjet/">Le projet</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                
+            </div>
+
+            <script>
+                var grand_ecran = document.getElementById('grand_ecran');
+                var petit_ecran = document.getElementById('petit_ecran');
+                if (screen.width > 800) {
+                    grand_ecran.style.display = 'block';
+                    petit_ecran.style.display = 'none';
+                } else {
+                    petit_ecran.style.display = 'block';
+                    grand_ecran.style.display = 'none';
+                }
+            </script>
+
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Les tags</h3>
+                    <div id="tags">
+                        {% if tag_list %}
+                            {% for tag in tag_list %}
+                                <a href="/partage/{{ tag.intitule }}/contenus/"><span id="{{ forloop.counter0 }}" class="badge text-bg-success">{{ tag.intitule }}</span></a>
+                            {% endfor %}
+                        {% else %}
+                            <p>No tags are available.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Graphe des occurences des tags</h3>
+                    <div id="bar-chart"></div>
+                </div>
+            </div>
+            
+            <footer class="text-center bg-light" style="width: 100%; border-top: 1px solid grey;">
+                <div class="small text-muted">
+                    <small>Ce(tte) œuvre est mise à disposition selon les termes de la <a class="link-success" rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Licence Creative Commons Attribution - Pas d'Utilisation Commerciale - Pas de Modification 4.0 International</a>.</small>
+                </div>
+            </footer>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    </body>
+</html>
+<script>
+    var tag_list = []; // Liste des tags
+    '{% for tag in tag_list %}'
+    tag_list.push('{{ tag }}')
+    '{% endfor %}'
+
+    var occurence_tag = []; // Nombre d'occurences par tag
+    '{% for occ in occurence_tag %}'
+    occurence_tag.push('{{ occ }}')
+    '{% endfor %}'
+
+    var label_tag = []; // C'est pour de l'esthétique au niveau de l'affichage du graphe
+    data1 = ['Occurence des tags'];
+    data2 = ['Nom des tags'];
+    for (let i = 0; i < occurence_tag.length; i++) {
+        data1.push(occurence_tag[i]);
+        data2.push(tag_list[i]);
+        label_tag.push('');
+    }
+
+    // On construit le graphe
+    var chart = c3.generate({
+        bindto: '#bar-chart',
+        padding: {
+            top: 20,
+            right: 20
+        },
+        data: {
+            columns: [
+                data1
+            ],
+            type: 'bar',
+            colors: {
+                'Occurence des tags': '#78B393',
+            },
+            onclick: function (d, element) {
+                // Lors d'un click on redirige vers le tag en question
+                console.log(d.index)
+                console.log(tag_list[d.index])
+                window.location.href = `/partage/${tag_list[d.index]}/contenus/`;
+            }
+        },
+        axis: {
+            x: {
+                label: {
+                    text: 'Tags',
+                    position: 'outer-center'
+                },
+                type: 'category',
+                categories: label_tag
+            },
+            y: {
+                label: {
+                    text: 'Nombre de tags',
+                    position: 'outer-middle'
+                }
+            }
+        },
+        legend: {
+            show: false
+        },
+        tooltip: {
+            format: {
+                title: function (x, index) {
+                    return tag_list[x];
+                },
+                name: function (name, ratio, id, index) { 
+                    return 'Occurence :'; 
+                }
+            }
+        }
+    });
+
+    var tag = document.getElementById('tags');
+
+    // On mouse over on met le tag en évidence
+    tag.addEventListener("mouseover", function( event ) {
+        var id = event.target.id;
+        if (id != 'tags') {
+            var bar = document.getElementsByClassName(`c3-shape c3-shape-${id} c3-bar c3-bar-${id}`)[0];
+            bar.style.fill = '#198754'; // Correspond a la couleur des barres
+            for (let i = 0; i < tag_list.length; i++) {
+                var bar2 = document.getElementsByClassName(`c3-shape c3-shape-${i} c3-bar c3-bar-${i}`)[0];
+                if (i != id) {
+                    bar2.style.opacity = 0.5
+                }
+            }
+        }
+    }, false);
+
+    // On mouse out on remet tout à la normal
+    tag.addEventListener("mouseout", function( event ) {
+        var id = event.target.id;
+        if (id != 'tags') {
+            var bar = document.getElementsByClassName(`c3-shape c3-shape-${id} c3-bar c3-bar-${id}`)[0];
+            bar.style.fill = '#78B393'; // Correspond a la couleur des barres
+            for (let i = 0; i < tag_list.length; i++) {
+                var bar2 = document.getElementsByClassName(`c3-shape c3-shape-${i} c3-bar c3-bar-${i}`)[0];
+                bar2.style.opacity = '';
+            }
+        }
+    }, false);
+</script>

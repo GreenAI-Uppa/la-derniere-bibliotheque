@@ -25,7 +25,7 @@ Entrez ici les instructions pour bien débuter avec votre projet...
 
 Dans un terminal, se placer à l'endroit du fichier manage.py et taper la commande suivante 
 
->>> python manage.py runserver
+python manage.py runserver
 
 ### Navigation sur le site 
 Se rendre à l'url suivante : `http://127.0.0.1:8000/`

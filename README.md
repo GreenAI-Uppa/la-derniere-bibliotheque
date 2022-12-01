@@ -51,17 +51,9 @@ Liste des packages à installer :
 
 Si vous souhaitez contribuer, contactez nous contact@la-derniere-bibliotheque.org pour obtenir les données et les modèles.
 
-## Versions
-Listez les versions ici 
-_exemple :_
-**Dernière version stable :** 5.0
-**Dernière version :** 5.1
-Liste des versions : [Cliquer pour afficher](https://github.com/your/project-name/tags)
-_(pour le lien mettez simplement l'URL de votre projets suivi de ``/tags``)_
-
 ## Auteurs
 * **GreenAI UPPA** _alias_ [@GreenAI-UPPA](https://github.com/GreenAI-Uppa/)
-
+* Thomas Poupon étudiant CYTECH
 
 ## License
 

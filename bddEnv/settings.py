@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '2k^0#e6s4sa^hop6ns$c*^0%@o95=)gcyhfqsujlugd=v6c!sn'
+SECRET_KEY = 'dataChallengeIAPau'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -136,9 +136,9 @@ DEFAULT_FROM_EMAIL = 'contact@la-derniere-bibliotheque.org'
 
 SERVER_EMAIL = 'contact@la-derniere-bibliotheque.org'
 
-CSRF_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
-SESSION_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
 
-CSRF_TRUSTED_ORIGINS = ['https://*.la-derniere-bibliotheque.org','https://*.127.0.0.1']
+# CSRF_TRUSTED_ORIGINS = ['https://*.la-derniere-bibliotheque.org','https://*.127.0.0.1']
 

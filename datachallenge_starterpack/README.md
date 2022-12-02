@@ -13,6 +13,9 @@ Ce fichier est un extraction des données de la base sqlite. Il contient la list
 ### le fichier GreenAI_DATA_CHALLENGE.pdf
 La présentation pdf de présentation du sujet, que vous avez entendu vendredi soir, avec des liens utiles, comme le Tutoriel Django, pour se lancer avec ce framework python.
 
+### le fichier queries_test.csv
+Ce fichier vous permettra d'évaluer votre moteur de recherche. Plus d'explications ci-dessous dans la partie évaluation.
+
 ## Lien vers les données Twitter et le modèle actuel en production
 Ce challenge consiste à améliorer le modèle de NLP fasttext en production sur le site actuel. Ce modèle a été entraîné cet été à l'aide des premiers contenus (300 environs à l'époque) et un ensemble de tweets issus de la communauté Bonpote, sur la période de l'élection présidentielle de cette année.
 
@@ -25,7 +28,7 @@ Le lien filetransfer [https://filesender.renater.fr/?s=download&token=fe1b1505-5
 ## Procédure d'évaluation du Moteur de Recherche
 Déterminer le meilleur algorithme de recherche n'est pas une tâche facile. Pour attester des bonnes performances de votre moteur de recherche suite à l'entraînement de nouveaux modèles de NLP, de nombreuses solutions peuvent être imaginées. 
 Pour garantir une mesure quantitative, nous mettons à votre disposition :
-- un fichier queries.csv qui contient 20 requêtes que nous avons sélectionnés avec les 20 contenus que doit ressortir le moteur de recherche. Pour chaque requête, nous avons également reporté les performances du moteur actuel (1 si le moteur actuel place le contenu une première position, 2, 3, etc jusqu'à 5 et -1 si le moteur de recherche n'a pas trouvé le contenu adéquate dans le top 5 affiché actuellement sur le site),
+- un fichier queries_test.csv qui contient 28 requêtes que nous avons sélectionnés avec les 28 contenus identifiés comme idéal et que doit ressortir votre moteur de recherche. Pour chaque requête, nous avons également reporté les performances du moteur actuel (colonne position, qui renseigne la position 1,2,3,4 ou 5 du contenu idéal dans le moteur actuel et -1 si le moteur de recherche n'a pas trouvé le contenu dans le top 5 affiché actuellement sur le site),
 - un script python de manière à évaluer le top5, top3 et top1 de votre algorithme, sur ces 20 requêtes, et son évolution tout au long du week-end,
 - un interface web qui sera opérationnelle dimanche et permettant d'évaluer votre algorithme final sur 20 requêtes supplémentaires, disponible à l'adresse suivante http://51.38.39.210:8502/
 

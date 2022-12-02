@@ -17,8 +17,11 @@ Pour commencer, vous devez récupérer les données et les modèles, trop volumi
 Une fois récupéré la base de données (db.sqlite3), les modèles de NLP (models/) et le settings.py, placez-les aux endroits suivants:
 
 la-derniere-bibliotheque/db.sqlite3
+
 la-derniere-bibliotheque/models/
+
 la-derniere-bibliotheque/bddEnv/settings.py
+
 Entrez ici les instructions pour bien débuter avec votre projet...
 
 ### Lancement du serveur
@@ -34,12 +37,12 @@ Se rendre à l'url suivante : `http://127.0.0.1:8000/`
 
 Installation des packages :
 
-`pip install -r requirements.txt`
+> pip install -r requirements.txt
 
 Lancer python puis installer la ressource punkt de nltk :
 
->>> import nltk
->>> nltk.download('punkt')
+`>>> import nltk`
+`>>> nltk.download('punkt')`
 
 ## Contributing
 

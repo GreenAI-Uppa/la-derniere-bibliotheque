@@ -32,22 +32,14 @@ Se rendre à l'url suivante : `http://127.0.0.1:8000/`
 
 ### Dépendances
 
-Liste des packages à installer :
-`pip install django-simple-history`
+Installation des packages :
 
-`pip install numpy`
+`pip install -r requirements.txt`
 
-`pip install -U scikit-learn`
+Lancer python puis installer la ressource punkt de nltk :
 
-`pip install nltk`
-
-`pip install -U spacy`
-
-`pip install fasttext`
-
-`pip install umap-learn`
-
-`pip install -U typing_extensions`
+>>> import nltk
+>>> nltk.download('punkt')
 
 ## Contributing
 

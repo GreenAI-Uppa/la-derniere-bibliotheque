@@ -47,6 +47,8 @@ Liste des packages à installer :
 
 `pip install umap-learn`
 
+`pip install -U typing_extensions`
+
 ## Contributing
 
 Si vous souhaitez contribuer, contactez nous contact@la-derniere-bibliotheque.org pour obtenir les données et les modèles.

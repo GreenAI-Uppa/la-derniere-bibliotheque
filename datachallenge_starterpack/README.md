@@ -22,6 +22,15 @@ Le lien filetransfer [https://filesender.renater.fr/?s=download&token=fe1b1505-5
 - un script python permettant de se lancer dans l'extraction des tweets,
 - le modèle fasttext déjà en production.
 
+## Procédure d'évaluation du Moteur de Recherche
+Déterminer le meilleur algorithme de recherche n'est pas une tâche facile. Pour attester des bonnes performances de votre moteur de recherche suite à l'entraînement de nouveaux modèles de NLP, de nombreuses solutions peuvent être imaginées. 
+Pour garantir une mesure quantitative, nous mettons à votre disposition :
+- un fichier queries.csv qui contient 20 requêtes que nous avons sélectionnés avec les 20 contenus que doit ressortir le moteur de recherche. Pour chaque requête, nous avons également reporté les performances du moteur actuel (1 si le moteur actuel place le contenu une première position, 2, 3, etc jusqu'à 5 et -1 si le moteur de recherche n'a pas trouvé le contenu adéquate dans le top 5 affiché actuellement sur le site),
+- un script python de manière à évaluer le top5, top3 et top1 de votre algorithme, sur ces 20 requêtes, et son évolution tout au long du week-end,
+- un interface web qui sera opérationnelle dimanche et permettant d'évaluer votre algorithme final sur 20 requêtes supplémentaires, disponible à l'adresse suivante http://51.38.39.210:8502/
+
+Bien sûr, rien ne vaut un outil de démonstration pour attester de la pertinence d'un moteur de recherche ! Vous pouvez vous-même créer vos requêtes et tester votre algorithme sur des questions que vous vous posez !
+
 ## Auteurs
 * **GreenAI UPPA** _alias_ [@GreenAI-UPPA](https://github.com/GreenAI-Uppa/)
 

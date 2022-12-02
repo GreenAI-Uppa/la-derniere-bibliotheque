@@ -1,7 +1,7 @@
 # Data Challenge La Dernière Bibliothèque
 
 
-Bienvenue dans le data challenge du projet la-dernière-bibliothèque. Votre mission, si vous l'accepter, sera d'améliorer l'application web dynamique pour faire grandir une base de données de connaissances et une interface ludique sur les problèmes environnementaux.
+Bienvenue dans le data challenge du projet la-dernière-bibliothèque. Votre mission, si vous l'acceptez, sera d'améliorer l'application web dynamique pour faire grandir une base de données de connaissances et une interface ludique sur les problèmes environnementaux.
 
 Ce dossier contient tous les éléments pour vous lancer dans la compétition et construire vos modèles de NLP. Il vient compléter le repo dédié à l'architecture python-django.
 
@@ -16,7 +16,7 @@ La présentation pdf de présentation du sujet, que vous avez entendu vendredi s
 ## Lien vers les données Twitter et le modèle actuel en production
 Ce challenge consiste à améliorer le modèle de NLP fasttext en production sur le site actuel. Ce modèle a été entraîné cet été à l'aide des premiers contenus (300 environs à l'époque) et un ensemble de tweets issus de la communauté Bonpote, sur la période de l'élection présidentielle de cette année.
 
-Le lien wetransfer : contient 
+Le lien filetransfer [https://filesender.renater.fr/?s=download&token=fe1b1505-59da-4ab9-9194-156e282349a3](https://filesender.renater.fr/?s=download&token=fe1b1505-59da-4ab9-9194-156e282349a3) contient :
 
 - l'intégralité des données Twitter, représentant plus de 80k comptes et plus de 1,6M de tweets (600 Mo environ),
 - un script python permettant de se lancer dans l'extraction des tweets,

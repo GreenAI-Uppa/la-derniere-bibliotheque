@@ -30,8 +30,51 @@ Dans un terminal, se placer à l'endroit du fichier manage.py et taper la comman
 
 > python manage.py runserver
 
+Pour un lancement depuis le serveur distant (ovh) avec accès depuis l'extérieur
+> python3 manage.py runserver 0.0.0.0:8000
+
+Pour augmenter la verbosité des logs, fixer `DEBUG=True` dans settings.py
+
 ### Navigation sur le site 
 Se rendre à l'url suivante : `http://127.0.0.1:8000/`
+
+### Modification de la base de données
+
+> python manage.py shell
+
+Then you can play with python in the db, see for instance:
+```
+from partage.models import Author, Source, Content
+Author.objects.all()
+Source.objects.all()
+
+print(len(Content.objects.all()),'in the database')
+
+# checking all the contents for a given source
+src = "Climat, crises : Le plan de transformation de l'économie française"
+for c in Content.objects.all():
+  if c.source.titre == src:
+      print()
+      print(c.text)
+```
+
+Note that if you want to modify the objects, django provide specific functions
+
+> element.save() # register in the db the new state of element object
+> element.delete() # delete this element from the db. 
+
+In the second case, this will delete every children of elements. So if you delete one source you delete all the contents from this source.
+
+Django provides functions to check dependencies between objects: 
+```
+from django.contrib.admin.utils import NestedObjects
+nested_object = NestedObjects("default")
+nested_object.collect([element])
+# If you want to delete multi item, you can use:
+# nested_object.collect(Model.objects.filter(type="deleted"))
+
+print(nested_object.nested())
+```
 
 ### Dépendances
 

@@ -37,6 +37,7 @@ def all_vectors_content(model):
 # on charge le modèle, on effectue une réduction des vecteurs 
 # grâce à umap et on stocke dans des variables
 model = fasttext.load_model('models/model2.bin')
+"""
 mat = all_vectors_content(model)
 contenu_plan = umap.UMAP(n_neighbors=4).fit_transform(mat)
 contenu_plan = np.array(contenu_plan)
@@ -45,7 +46,7 @@ data_y = []
 data_x.append(contenu_plan[:,0])
 data_y.append(contenu_plan[:,1])
 ################################################
-
+"""
 ## index() et next() renvoient tous les deux sur la même page html
 ## next() sert à afficher les contenus suivants
 
@@ -69,10 +70,11 @@ def index(request):
         'content_id_suivant': content_id_suivant,
         'content_http_list': content_http_list,
         'source_list': source_list,
-        'data_x': data_x,
-        'data_y': data_y,
         'var_reconnaissance': var_reconnaissance,
         'content_id': content_id,  
+        #'data_x': data_x,
+        #'data_y': data_y,
+        'var_reconnaissance': var_reconnaissance
     }
     return render(request, 'partage/index.html', context)
 
@@ -91,29 +93,29 @@ def next(request, content_id):
         'content_list': content_list,
         'texte': texte,
         'content_http_list': content_http_list,
-        'data_x': data_x,
-        'data_y': data_y,
+        #'data_x': data_x,
+        #'data_y': data_y,
+        'tab_id': tab_id,
         'source_list': source_list,
         'content_id': content_id,
     }
     return render(request, 'partage/index.html', context)
 
-## tags() permet d'afficher tous les tags
 
-tag_list = Tag.objects.all() # tous les tags de la bdd
-occurence_tag = []
-for tag in tag_list:
-    i = 0
-    for content in content_list:
-        for t in content.tag.all():
-            if t == tag:
-                i = i+1
-    occurence_tag.append(i)  
-
-def tags(request):
+def tags(request):  
+    ############ Construction du graphe tags.html ############
     tag_list = Tag.objects.all() # tous les tags de la bdd
     # on calcule les occurences de chaque tag
-    
+    occurence_tag = []
+    for tag in tag_list:
+        i = 0
+        for content in content_list:
+            for t in content.tag.all():
+                if t == tag:
+                    i = i+1
+        occurence_tag.append(i)
+    ##########################################################
+    ## tags() permet d'afficher tous les tags
     context = {
         'tag_list': tag_list,
         'occurence_tag': occurence_tag,

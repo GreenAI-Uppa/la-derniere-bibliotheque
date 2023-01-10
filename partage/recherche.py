@@ -13,6 +13,7 @@ from spacy.lang.fr.stop_words import STOP_WORDS as fr_stop
 ## On transforme une phrase en vecteur grâce au model
 def embedding(sentence, model):
     punctuations = list(string.punctuation) # liste de caractère de ponctuations
+    # NOTE: removing punctuation seems already be done in voisins_sentence. Remove this condition ?
     sentence_bis = [i for i in word_tokenize(sentence) if i not in punctuations]
     sentence_vector = []
     for word in sentence_bis:

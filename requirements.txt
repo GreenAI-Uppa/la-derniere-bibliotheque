@@ -1,0 +1,9 @@
+Django
+django-simple-history
+numpy
+scikit-learn
+nltk
+spacy
+fasttext
+umap-learn
+typing_extensions

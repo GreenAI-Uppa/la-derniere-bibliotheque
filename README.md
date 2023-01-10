@@ -42,7 +42,7 @@ Se rendre à l'url suivante : `http://127.0.0.1:8000/`
 
 > python manage.py shell
 
-Then you can play with python in the db, see for instance:
+Ensuite, vous pouvez accéder à la bdd via python
 ```
 from partage.models import Author, Source, Content
 Author.objects.all()
@@ -58,15 +58,15 @@ for c in Content.objects.all():
       print(c.text)
 ```
 
-Note that if you want to modify the objects, django provide specific functions
+Django fournit des fonctions pour modifier les objets en base
 
 > element.save() # register in the db the new state of element object
 
 > element.delete() # delete this element from the db. 
 
-In the second case, this will delete every children of elements. So if you delete one source you delete all the contents from this source.
+Dans le deuxième cas, les objets liés à `element` seront aussi détruits. Donc, si vous détruisez une source, vous détruisez ses contenus.
 
-Django provides functions to check dependencies between objects: 
+Django fournit des fonctions pour lister les dépendances entre objets. 
 ```
 from django.contrib.admin.utils import NestedObjects
 nested_object = NestedObjects("default")

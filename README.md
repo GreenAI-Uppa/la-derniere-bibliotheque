@@ -61,6 +61,7 @@ for c in Content.objects.all():
 Note that if you want to modify the objects, django provide specific functions
 
 > element.save() # register in the db the new state of element object
+
 > element.delete() # delete this element from the db. 
 
 In the second case, this will delete every children of elements. So if you delete one source you delete all the contents from this source.

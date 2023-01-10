@@ -25,6 +25,7 @@ class Source(models.Model):
 class Content(models.Model):
     text = models.TextField()
     text_game = models.TextField(blank=True)
+    is_easy = models.BooleanField(blank=True, default=False)
     tag = models.ManyToManyField(Tag)
     source = models.ForeignKey(Source, on_delete=models.CASCADE)
     location = models.CharField(max_length=100)

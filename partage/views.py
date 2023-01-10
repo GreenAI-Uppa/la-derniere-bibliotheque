@@ -49,28 +49,30 @@ data_y.append(contenu_plan[:,1])
 ## index() et next() renvoient tous les deux sur la même page html
 ## next() sert à afficher les contenus suivants
 
+
 def index(request):
     content_list = Content.objects.all() # liste de tous les contenus
     content_http_list = Content.objects.filter(location__startswith="http") # liste de tous les contenus provenant de sites internet
     nmb_content = Content.objects.count() # nombre de contenu
     source_list = Source.objects.all() # liste de toutes les sources
-    texte = content_list[random.randrange(0, nmb_content - 1)] # contenu aléatoire parmi tous
-    content_id_suivant = random.randrange(0, nmb_content - 1) # un autre contenu aléatoire
-    # on stocke tous les id pour la création du graphe
-    tab_id = []
+    list_id = []
     for content in content_list:
-        tab_id.append(content.id)
+        list_id.append(content.id)
+    content_id = random.choice(list_id)
+    texte = Content.objects.get(id=content_id) # contenu aléatoire parmi tous
+    content_id_suivant = random.choice(list_id) # un autre contenu aléatoire
+    # on stocke tous les id pour la création du graphe
     var_reconnaissance = 'reconnaissance'
     context = {
         'content_list': content_list,
         'texte': texte,
         'content_id_suivant': content_id_suivant,
         'content_http_list': content_http_list,
-        'tab_id': tab_id,
         'source_list': source_list,
         'data_x': data_x,
         'data_y': data_y,
-        'var_reconnaissance': var_reconnaissance
+        'var_reconnaissance': var_reconnaissance,
+        'content_id': content_id,  
     }
     return render(request, 'partage/index.html', context)
 
@@ -79,11 +81,11 @@ def next(request, content_id):
     content_http_list = Content.objects.filter(location__startswith="http") # liste de tous les contenus provenant de sites internet
     nmb_content = Content.objects.count()
     source_list = Source.objects.all() # liste de toutes les sources
-    content_id_suivant = random.randrange(0, nmb_content - 1)
-    texte = content_list[content_id]
-    tab_id = []
+    texte = Content.objects.get(id=content_id)
+    list_id = []
     for content in content_list:
-        tab_id.append(content.id)
+        list_id.append(content.id)
+    content_id_suivant = random.choice(list_id)
     context = {
         'content_id_suivant': content_id_suivant,
         'content_list': content_list,
@@ -91,14 +93,14 @@ def next(request, content_id):
         'content_http_list': content_http_list,
         'data_x': data_x,
         'data_y': data_y,
-        'tab_id': tab_id,
         'source_list': source_list,
+        'content_id': content_id,
     }
     return render(request, 'partage/index.html', context)
 
-############ Construction du graphe tags.html ############
+## tags() permet d'afficher tous les tags
+
 tag_list = Tag.objects.all() # tous les tags de la bdd
-# on calcule les occurences de chaque tag
 occurence_tag = []
 for tag in tag_list:
     i = 0
@@ -106,12 +108,12 @@ for tag in tag_list:
         for t in content.tag.all():
             if t == tag:
                 i = i+1
-    occurence_tag.append(i)
-##########################################################
+    occurence_tag.append(i)  
 
-## tags() permet d'afficher tous les tags
-
-def tags(request):  
+def tags(request):
+    tag_list = Tag.objects.all() # tous les tags de la bdd
+    # on calcule les occurences de chaque tag
+    
     context = {
         'tag_list': tag_list,
         'occurence_tag': occurence_tag,

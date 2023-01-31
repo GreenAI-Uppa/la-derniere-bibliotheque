@@ -296,11 +296,14 @@ def tous(request):
     content_http_list = Content.objects.filter(location__startswith="http") # liste de tous les contenus provenant de sites internet
     content_list_not_falsified = Content.objects.filter(text_game="") # contenu qui n'ont pas encore été traité pour les jeux
     content_list_falsified = Content.objects.exclude(text_game="") # contenu qui ont été traité pour les jeux
+    content_list_easy = Content.objects.filter(is_easy=True) # contenu qui ont été traité pour les jeux
+    print(len(content_list_easy))
     context = {
         'content_list': content_list,
         'content_http_list': content_http_list,
         'content_list_not_falsified': content_list_not_falsified,
         'content_list_falsified': content_list_falsified,
+        'content_list_easy': content_list_easy,
     }
     return render(request, 'partage/tous.html', context)
 

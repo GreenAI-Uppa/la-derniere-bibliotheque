@@ -1,160 +1,106 @@
-<!DOCTYPE html>
-<html style="height: 100%;">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Rechercher</title>
-        <!--<link href="https://useiconic.com/open/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    </head>
-    <body style="height: 100%;">
-        <div style="min-height: 100%; position: relative; bottom: 0;">
-            <div class="sticky-top">
-                <div id="grand_ecran" class="text-bg-light p-3" style="display: none;">
-                    <a href="/partage"><img src="https://raw.githubusercontent.com/GreenAI-Uppa/GreenAI-Uppa.github.io/main/assets/horizontal_dark_logo.png" class="img-fluid" style="width: 20%;" alt=""></a>
-                    <a href="/partage"><button type="button" class="btn btn-outline-success">Accueil</button></a>
-                    <a href="/partage/jeu/"><button type="button" class="btn btn-outline-success">Jouer</button></a>
-                    <a href="/partage/tags"><button type="button" class="btn btn-outline-success">Les tags</button></a>
-                    <a href="/partage/rechercher/"><button type="button" class="btn btn-outline-success">Rechercher</button></a>
-                    <a href="/partage/sources/allsources/"><button type="button" class="btn btn-outline-success">Nos sources</button></a>
-                    <!--<a href="/partage/more/contribute/"><button type="button" class="btn btn-outline-success">Contribuer</button></a>-->
-                    <a href="/partage/more/leProjet/"><button type="button" class="btn btn-outline-success">Le projet</button></a>
-                </div>
+{% extends "base.html" %}
 
-                <div id="petit_ecran" style="display: none;">
-                    <nav class="navbar navbar-expand-lg bg-light">
-                        <div class="container-fluid">
-                            <a class="navbar-brand" href="/partage">
-                            <img src="https://raw.githubusercontent.com/GreenAI-Uppa/GreenAI-Uppa.github.io/main/assets/horizontal_dark_logo.png" class="img-fluid" width="160" alt="">
-                        </a>
-                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-                            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                                <div class="navbar-nav">
-                                    <a class="nav-link" href="/partage">Accueil</a>
-                                    <a class="nav-link" href="/partage/jeu/">Jouer</a>
-                                    <a class="nav-link" href="/partage/tags/">Les tags</a>
-                                    <a class="nav-link active" aria-current="page" href="/partage/rechercher/">Rechercher</a>
-                                    <a class="nav-link" href="/partage/sources/allsources/">Nos sources</a>
-                                    <!--<a class="nav-link" href="/partage/more/contribute/">Contribuer</a>-->
-                                    <a class="nav-link" href="/partage/more/leProjet/">Le projet</a>
-                                </div>
-                            </div>
-                        </div>
-                    </nav>
-                    
-                </div>
-        
-                <script>
-                    var grand_ecran = document.getElementById('grand_ecran');
-                    var petit_ecran = document.getElementById('petit_ecran');
-                    if (screen.width > 800) {
-                        grand_ecran.style.display = 'block';
-                        petit_ecran.style.display = 'none';
-                    } else {
-                        petit_ecran.style.display = 'block';
-                        grand_ecran.style.display = 'none';
-                    }
-                </script>
+{% block title %}Recherche{% endblock %}
 
-                <div class="card">
-                    <div class="card-body">
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-text" id="basic-addon1">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                                </svg>
-                            </span>
-                            <input id="search" type="text" class="form-control" placeholder="Entrez votre recherche" aria-label="Username" aria-describedby="basic-addon1" value="{% if sentence %}{{ sentence }}{% endif %}">
-                            <button id="bouton" class="btn btn-outline-success" type="button" id="button-addon2" onclick="envoyer()">Rechercher</button>
-                        </div>
-                    </div>
+{% block content %}
+<section class="py-20">
+    <div class="pb-10 text-center w-3/4 mx-auto">
+        <h3 class="text-2xl font-medium text-emerald-400 uppercase tracking-[1em] mb-2">Recherche</h3>
+        <h1 class="font-bold text-5xl text-gray-800 leading-none">Trouvez votre bonheur parmi nos milliers de ressources
+            disponibles</h1>
+
+        <form class="mt-10" onsubmit="event.preventDefault(); envoyer();">
+            <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Rechercher</label>
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
                 </div>
+                <input id="search"
+                    class="block w-full p-4 pl-10 text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-emerald-400 focus:border-emerald-400 "
+                    placeholder="Tapez votre recherche..." value="{% if sentence %}{{ sentence }}{% endif %}" required>
+                <button id="searchButton" type="submit"
+                    class="text-white absolute right-1.5 bottom-1.5 bg-emerald-400 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-full px-4 py-3 ">Rechercher</button>
             </div>
-            {% if tab_content %}
-                <div class="card">
-                    <div class="card-body">
-                        {% for dist in distance %}
-                            {% for c in tab_content %}
-                                {% if forloop.counter == forloop.parentloop.counter %}
-                                    <div class="card">
-                                        <div class="card-body">
-                                            {% if c in content_http_list %}
-                                                <h5 class="card-title"><a href="/partage/sources/{{ c.source }}" style="text-decoration: none; color: black;">{{ c.source }}</a>
-                                                    <a href="{{ c.location }}" target="_blank" style="color: black;"><button type="button" class="btn">
-                                                        lien</button></a>
-                                                </h5>
-                                            {% else %}
-                                                <h5 class="card-title"><a href="/partage/sources/{{ c.source }}" style="text-decoration: none; color: black;">{{ c.source }}</a>
-                                                    <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ c.location }}">
-                                                    Marque page</button>                                             
-                                                </h5>
-                                            {% endif %}
-                                            <h6 class="card-subtitle text-muted mb-2">
-                                                {% for author in c.source.auteur.all %}
-                                                    <a href="/partage/author/{{ author }}"><span class="badge text-bg-light">{{ author }}</span></a>
-                                                {% endfor %}
+        </form>
+        {% if tracker %}
+        <p class="text-center mt-2 font-medium text-gray-700">{{ nb_results }} résultats trouvés, pour une consommation
+            de <span class="font-bold text-emerald-400">
+                {{ tracker }}</span> kg eq/CO<sub>2</sub>!</p>
+        {% endif %}
+    </div>
 
-                                            </h6>
-                                            <p class="card-text">{{ c.text|linebreaks }}</p>
-                                            <div id="tags">
-                                                {% for letag in c.tag.all %}
-                                                <a href="/partage/{{ letag }}/contenus/"><span class="badge text-bg-success">{{ letag }}</span></a>
-                                                {% endfor %}
-                                            </div>
-                                            <br>
-                                            <a href="/../admin/partage/content/{{ c.id }}/change/" target="_blank"><svg style="color: black;" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                            </svg></a>
-                                            <svg id="button_upload_{{ c.id }}" style="cursor: pointer;" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
-                                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                                <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
-                                            </svg>
-                                            <script>
-                                                var btnUpload = document.getElementById('button_upload_{{ c.id }}');
+    {% if tab_content %}
 
-                                                btnUpload.addEventListener('click', function(event) {
-                                                    var lien = "https://la-derniere-bibliotheque.org/partage/next/{{ c.id }}/";
-                                                    navigator.clipboard.writeText(lien).then(function() {
-                                                        alert("Le lien a été copié dans le presse papier !");
-                                                    }, function(err) {
-                                                        alert("ERREUR : le lien n'a pas été copié dans le presse papier !");
-                                                    });
-                                                });
-                                            </script>
-                                        </div>
-                                    </div><br> 
-                                {% endif %}
-                            {% endfor %}    
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endif %}
-            
-            <footer class="text-center bg-light" style="width: 100%; border-top: 1px solid grey;">
-                <div class="small text-muted">
-                    <small>Ce(tte) œuvre est mise à disposition selon les termes de la <a class="link-success" rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Licence Creative Commons Attribution - Pas d'Utilisation Commerciale - Pas de Modification 4.0 International</a>.</small>
-                </div>
-            </footer>
+    {% for dist in distance %}
+    {% for c in tab_content %}
+    {% if forloop.counter == forloop.parentloop.counter %}
+    <div class="bg-white rounded-2xl px-6 py-4 shadow-3xl my-10">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <a class="text-2xl text-gray-800 font-medium block w-fit" href="/partage/sources/{{ c.source }}">
+                    {{c.source }}</a>
+                <p>|</p>
+                {% for author in c.source.auteur.all %}
+                <a class="text-sm px-1 py-[2px] rounded-md bg-gray-100 hover:bg-gray-200 transition-all"
+                    href="/partage/author/{{ author }}">
+                    {{ author }}</a>
+                {% endfor %}
+            </div>
+
+            <ul class="flex gap-5 text-2xl">
+                {% if c in content_http_list %}
+                <li>
+                    <a href="/partage/sources/{{ c.source }}">
+                        <i
+                            class="bi bi-link-45deg text-gray-700 hover:!text-cyan-400 transition-all cursor-pointer"></i>
+                    </a>
+                </li>
+                {% else %}
+                <li title="{{ c.source }}" class="text-gray-700 hover:text-blue-400 transition-all cursor-pointer">
+                    <a href="/partage/sources/{{ c.source }}">
+                        <i class="bi bi-info-circle-fill"></i>
+                    </a>
+                </li>
+                {% endif %}
+                <li><a href="/../admin/partage/content/{{ c.id }}/change/" target="_blank">
+                        <i class="bi bi-pen-fill text-gray-700 hover:text-yellow-400 transition-all cursor-pointer"></i>
+                    </a></li>
+                <li class="text-gray-700 hover:text-red-400 transition-all cursor-pointer"><i
+                        class="bi bi-clipboard-check"></i></li>
+            </ul>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-    </body>
-</html>
+        <p class="py-2">{{ c.text|linebreaks }}</p>
+
+        <div class="flex gap-2 mt-2">
+            Tags :
+            {% for letag in c.tag.all %}
+            <a class="text-sm px-1 py-[2px] rounded-md bg-emerald-400 hover:bg-emerald-500 transition-all text-white"
+                href="/partage/{{ letag }}/contenus/">
+                {{ letag }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endfor %}
+    {% endif %}
+</section>
 <script>
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-    function envoyer() {
-        var sentence = document.getElementById('search').value
-        var url = '/partage/rechercher/'+sentence
-        window.location = url
-    }
-    var button = document.getElementById("bouton");
-    var textBox = document.getElementById("search");
+    const button = document.querySelector("#searchButton");
+    const textBox = document.querySelector("#search");
     textBox.addEventListener("keyup", function (event) {
         if (event.keyCode == 13) {
             button.click();
         }
     });
+    function envoyer() {
+        const sentence = textBox.value
+        const url = '/partage/rechercher/' + sentence
+        window.location = url
+    }
 </script>
+{% endblock %}

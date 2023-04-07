@@ -16,6 +16,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 import umap
 from django.template import RequestContext
+from codecarbon import EmissionsTracker
 
 fasttext.FastText.eprint = lambda x: None
 
@@ -36,6 +37,9 @@ def all_vectors_content(model):
 
 # on charge le modèle, on effectue une réduction des vecteurs 
 # grâce à umap et on stocke dans des variables
+tracker_init = EmissionsTracker()
+tracker_init.start()
+init_impact = tracker_init.stop()
 model = fasttext.load_model('models/model2.bin')
 """
 mat = all_vectors_content(model)
@@ -74,7 +78,8 @@ def index(request):
         'content_id': content_id,  
         #'data_x': data_x,
         #'data_y': data_y,
-        'var_reconnaissance': var_reconnaissance
+        'var_reconnaissance': var_reconnaissance,
+        'init_impact': "{:.4e}".format(init_impact)
     }
     return render(request, 'partage/index.html', context)
 
@@ -95,7 +100,6 @@ def next(request, content_id):
         'content_http_list': content_http_list,
         #'data_x': data_x,
         #'data_y': data_y,
-        'tab_id': tab_id,
         'source_list': source_list,
         'content_id': content_id,
     }
@@ -367,7 +371,7 @@ def rechercheSentence(request, sentence):
 
 ## jeu() est la page d'accueil des jeux
 
-nombre_question = 10 #Modifier cette variable et tout changera automatiquement
+nombre_question = 1 #Modifier cette variable et tout changera automatiquement
 
 def jeu(request):
     objet_inutile = 'test' # permet de tout faire sur une seule page html
@@ -448,7 +452,7 @@ def jouer2(request):
 def envoyer(request):
     pseudo = request.POST.get('pseudo') # on récupère le pseudo envoyer par la méthode POST
     score = request.POST.get('score') # on récupère le score envoyer par la méthode POST
-    if isinstance(pseudo, str) and (isinstance(int(score), int)) and (int(score) >= 0) and (int(score) <= 10) and (len(pseudo) < 20) and (len(pseudo.replace(' ', ''))>0):
+    if isinstance(pseudo, str) and (isinstance(int(score), int)) and (int(score) >= 0) and (int(score) <= nombre_question) and (len(pseudo) < 20) and (len(pseudo.replace(' ', ''))>0):
         variable_verif = 0
         for i in range(nombre_question):
             reponse = request.POST.get(f'score_{i}') # on récupère le résultat (true or false)

@@ -7,3 +7,4 @@ spacy
 fasttext
 umap-learn
 typing_extensions
+django-tailwind

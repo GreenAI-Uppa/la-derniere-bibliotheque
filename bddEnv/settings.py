@@ -14,7 +14,7 @@ import os
 import sys
 import mimetypes
 
-mimetypes.add_type("text/html", ".css", True)
+mimetypes.add_type("text/css", ".css", True)
 mimetypes.add_type("text/html", ".js", True)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -28,7 +28,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'dataChallengeIAPau'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'simple_history',
+    'tailwind',
+    'theme',
+    'admin_extra_buttons'
 ]
 
 MIDDLEWARE = [
@@ -142,3 +145,8 @@ SERVER_EMAIL = 'contact@la-derniere-bibliotheque.org'
 
 # CSRF_TRUSTED_ORIGINS = ['https://*.la-derniere-bibliotheque.org','https://*.127.0.0.1']
 
+TAILWIND_APP_NAME = 'theme'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]

@@ -1,235 +1,76 @@
-<!DOCTYPE html>
-<html style="height: 100%;">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>More</title>
-        <!--<link href="https://useiconic.com/open/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    </head>
-    <body style="height: 100%;">
-        <div style="min-height: 100%; position: relative; bottom: 0;">
-            <div id="grand_ecran" class="text-bg-light p-3 sticky-top" style="display: none;">
-                <a href="/partage"><img src="https://raw.githubusercontent.com/GreenAI-Uppa/GreenAI-Uppa.github.io/main/assets/horizontal_dark_logo.png" class="img-fluid" style="width: 20%;" alt=""></a>
-                <a href="/partage"><button type="button" class="btn btn-outline-success">Accueil</button></a>
-                <a href="/partage/jeu/"><button type="button" class="btn btn-outline-success">Jouer</button></a>
-                <a href="/partage/tags"><button type="button" class="btn btn-outline-success">Les tags</button></a>
-                <a href="/partage/rechercher/"><button type="button" class="btn btn-outline-success">Rechercher</button></a>
-                <a href="/partage/sources/allsources/"><button type="button" class="btn btn-outline-success">Nos sources</button></a>
-                <!--<a href="/partage/more/contribute/"><button type="button" class="btn btn-outline-success">Contribuer</button></a>-->
-                <a href="/partage/more/leProjet/"><button type="button" class="btn btn-outline-success">Le projet</button></a>
-            </div>
+{% extends "base.html" %}
 
-            <div id="petit_ecran" style="display: none;" class="sticky-top">
-                <nav class="navbar navbar-expand-lg bg-light">
-                    <div class="container-fluid">
-                        <a class="navbar-brand" href="/partage">
-                            <img src="https://raw.githubusercontent.com/GreenAI-Uppa/GreenAI-Uppa.github.io/main/assets/horizontal_dark_logo.png" class="img-fluid" width="160" alt="">
-                        </a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                            <div class="navbar-nav">
-                                <a class="nav-link" href="/partage">Accueil</a>
-                                <a class="nav-link" href="/partage/jeu/">Jouer</a>
-                                <a class="nav-link" href="/partage/tags/">Les tags</a>
-                                <a class="nav-link" href="/partage/rechercher/">Rechercher</a>
-                                <a class="nav-link" href="/partage/sources/allsources/">Nos sources</a>
-                                {% if sujet == "contribute" %}
-                                    <!--<a class="nav-link active" aria-current="page" href="/partage/more/contribute/">Contribuer</a>-->
-                                    <a class="nav-link" href="/partage/more/leProjet/">Le projet</a>
-                                {% endif %}
-                                {% if sujet == "leProjet" %}
-                                    <!--<a class="nav-link" href="/partage/more/contribute/">Contribuer</a>-->
-                                    <a class="nav-link active" aria-current="page" href="/partage/more/leProjet/">Le projet</a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-                
-            </div>
+{% block title %}Sources{% endblock %}
 
-            <script>
-                var grand_ecran = document.getElementById('grand_ecran');
-                var petit_ecran = document.getElementById('petit_ecran');
-                if (screen.width > 800) {
-                    grand_ecran.style.display = 'block';
-                    petit_ecran.style.display = 'none';
-                } else {
-                    petit_ecran.style.display = 'block';
-                    grand_ecran.style.display = 'none';
-                }
-            </script>
-            
-            <!--{% if sujet == "contribute" %}
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title">Devenez contributeur</h3>
-                        <br>
-                        <p>Si vous voulez contribuer à notre base de donnée et y ajouter du contenu à but informatif, envoyez un mail à tpoupon@univ-pau.fr pour que l'on puisse vous autoriser à ajouter du contenu.</p>
-                        <p>Si vous l'êtes déja : <a href="http://51.38.39.210/admin/partage/content/add/" target="_blank" style="color: SeaGreen;">Ajouter du contenu</a>.</p>
-                        <p>Actuellement il y a {{ content_list.count }} contenus dans la base de données </p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title">Progression des contributeurs</h3>
-                        <h6 class="card-subtitle mb-2 text-muted">Objectif : 100 contenus chacun</h6><br>
-                        <p>Nicolas : {{ nombre_contenu_ntirel }} contenu saisis</p>
-                        <div class="progress" style="height: 20px;">
-                            <div id="bar1" class="progress-bar bg-success" role="progressbar" aria-valuenow="{{ nombre_contenu_ntirel }}" aria-valuemin="0" aria-valuemax="100">{{ nombre_contenu_ntirel }}</div>
-                        </div><br>
-                        <p>Sébastien : {{ nombre_contenu_sloustau }} contenu saisis</p>
-                        <div class="progress" style="height: 20px;">
-                            <div id="bar2" class="progress-bar bg-success" role="progressbar" aria-valuenow="{{ nombre_contenu_sloustau }}" aria-valuemin="0" aria-valuemax="100">{{ nombre_contenu_sloustau }}</div>
-                        </div><br>
-                        <p>Simon : {{ nombre_contenu_slebeaud }} contenu saisis</p>
-                        <div class="progress" style="height: 20px;">
-                            <div id="bar3" class="progress-bar bg-success" role="progressbar" aria-valuenow="{{ nombre_contenu_slebeaud }}" aria-valuemin="0" aria-valuemax="100">{{ nombre_contenu_slebeaud }}</div>
-                        </div><br>
-                        <p>Thomas : {{ nombre_contenu_tpoupon }} contenu saisis</p>
-                        <div class="progress" style="height: 20px;">
-                            <div id="bar4" class="progress-bar bg-success" role="progressbar" aria-valuenow="{{ nombre_contenu_tpoupon }}" aria-valuemin="0" aria-valuemax="100">{{ nombre_contenu_tpoupon}}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title">Dernières saisies des contributeurs</h3><br>
-                        {% for list1item in tab_users %}
-                            {% for list2 in tab_contenu %}
-                                {% if forloop.counter == forloop.parentloop.counter %}
-                                    <h5>{{ list1item }} :
-                                    {% if list2 == 'Pas de contenu' %}
-                                        <b>Pas encore de contenu</b></h5><br>
-                                    {% else %}
-                                        </h5>
-                                        <div class="list-group" style="max-height: 600px; max-width: 800px; margin-bottom: 10px; overflow: scroll; -webkit-overflow-scrolling: touch; border: black 1px solid;">
-                                            {% for list2item in list2 %}
-                                                {% for item in list2item %}
-                                                    <div class="list-group-item">
-                                                        {% for contenu in content_list%}
-                                                            {% if item == contenu.id %}
-                                                                <div class="card">
-                                                                    <div class="card-body">
-                                                                        {% if contenu in content_http_list %}
-                                                                            <h5 class="card-title"><a href="/partage/sources/{{ contenu.source }}" style="text-decoration: none; color: black;">{{ contenu.source }}</a>
-                                                                                <a href="{{ contenu.location }}" target="_blank" style="color: black;"><button type="button" class="btn">
-                                                                                    lien</button></a>
-                                                                            </h5>
-                                                                        {% else %}
-                                                                            <h5 class="card-title"><a href="/partage/sources/{{ contenu.source }}" style="text-decoration: none; color: black;">{{ contenu.source }}</a>
-                                                                                <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ contenu.location }}">
-                                                                                Marque page</button>                                             
-                                                                            </h5>
-                                                                        {% endif %}
-                                                                        <h6 class="card-subtitle text-muted mb-2">
-                                                                            {% for author in contenu.source.auteur.all %}
-                                                                                <a href="/partage/author/{{ author }}"><span class="badge text-bg-light">{{ author }}</span></a>
-                                                                            {% endfor %}
-                                                
-                                                                        </h6>
-                                                                        <p class="card-text">{{ contenu.text|linebreaks }}</p>
-                                                                        <div id="tags">
-                                                                            {% for letag in contenu.tag.all %}
-                                                                            <a href="/partage/{{ letag }}/contenus/"><span class="badge text-bg-success">{{ letag }}</span></a>
-                                                                            {% endfor %}
-                                                                        </div>
-                                                                        <br>
-                                                                        <a href="/../admin/partage/content/{{ contenu.id }}/change/" target="_blank"><svg style="color: black;" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                                                        </svg></a></p>
-                                                                    </div>
-                                                                </div>         
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                    </div>
-                                                {% endfor %}
-                                            {% endfor %}
-                                        </div><br>
-                                    {% endif %}
-                                {% endif %}
-                            {% endfor %}
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endif %}-->
+{% block content %}
 
-            {% if sujet == "leProjet" %}
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title">Le projet</h3>
-                        <br>
-                        <p class="card-text">
-                            la-derniere-bibliotheque.org est un site de sensibilisation et d'apprentissage
-                            sur les problèmes écologiques actuels. Grâce à notre base de données encore en 
-                            construction, nous proposons une gamme de contenus sur des thèmes très variés
-                            (toujours en rapport avec les dérèglements du système Terre). Vous pouvez d'ailleurs voir les 
-                            différents thèmes dans l'onglet <a class="link-success" href="/partage/tags/">Les tags</a>.
-                        </p>
-                        <p class="card-text">
-                            Pour vous aider dans votre soif d'apprendre, nous proposons des jeux dans l'onglet 
-                            <a class="link-success" href="/partage/jeu/">Jouer</a> ainsi qu'un moteur de recherche NLP
-                            dans l'onglet <a class="link-success" href="/partage/rechercher/">Rechercher</a>.
-                            Vous pourrez d'ailleurs tester ses performances en lui posant des questions sur le réchauffement 
-                            climatique, et si vous voulez savoir comment il marche, cliquez <a class="link-success" target="_blank" href="https://www.linkedin.com/posts/green-ai-uppa_pr%C3%A9sentation-de-thomas-et-d%C3%A9mo-de-son-application-activity-6950086315581300736-2i60?utm_source=linkedin_share&utm_medium=member_desktop_web">ICI</a>.
-                        </p><br>
-                        <h3 class="card-title">Comment participer ?</h3>
-                        <br>
-                        <p class="card-text">
-                            Actuellement notre base de données compte {{ content_list.count }} contenus. L'objectif est 
-                            d'augmenter ce chiffre autant que possible. Si le projet vous intéresse, vous pouvez devenir
-                            contributeur et donc nous aider à agrémenter notre base de données. Pour ce faire, il vous suffit
-                            d'envoyer un mail à <a class="link-success" href="mailto:contact@la-derniere-bibliotheque.org">contact@la-derniere-bibliotheque.org</a> en y expliquant vos motivations, et nous vous 
-                            répondrons avec grand plaisir.
-                        </p><br>
-                        <h3 class="card-title">Qui sommes-nous ?</h3>
-                        <br>
-                        <p class="card-text">
-                            L'équipe GreenAI UPPA est un laboratoire engagé qui améliore les algorithmes 
-                            d'apprentissage automatique de pointe. Soucieux de notre impact sur la 
-                            terre, nous développons des algorithmes basse consommation et relevons les 
-                            défis environnementaux. Contrairement à d'autres groupes de recherche, nos 
-                            activités sont dédiées à l'ensemble du pipeline, des bases mathématiques au 
-                            prototype R&D et au déploiement en production avec des partenaires 
-                            industriels. Nous sommes basés à Pau, en France, face aux Pyrénées.
-                        </p>
-                        <p>
-                            Notre site : <a class="link-success" href="https://greenai-uppa.github.io/" target="_blank">https://greenai-uppa.github.io/</a>
-                        </p>
-                    </div>
-                </div>
-            {% endif %}
+{% if sujet == "leProjet" %}
+<section class="flex flex-col py-10 gap-10">
+    <h1 class="text-5xl text-center font-bold text-gray-800">A propos</h1>
+    <div>
+        <h3 class="font-bold text-3xl pb-3 text-gray-800">Le projet</h3>
+        <p>
+            la-derniere-bibliotheque.org est un site de sensibilisation et d'apprentissage
+            sur les problèmes écologiques actuels. Grâce à notre base de données encore en
+            construction, nous proposons une gamme de contenus sur des thèmes très variés
+            (toujours en rapport avec les dérèglements du système Terre).<br />
+            Pour vous aider dans votre soif d'apprendre, nous proposons des jeux dans l'onglet
+            <a class="text-emerald-400 underline" href="/partage/jeu/">Jouer</a> ainsi qu'un moteur de recherche NLP
+            dans l'onglet <a class="text-emerald-400 underline" href="/partage/rechercher/">Rechercher</a>.
+            Vous pourrez d'ailleurs tester ses performances en lui posant des questions sur le réchauffement
+            climatique, et si vous voulez savoir comment il marche, cliquez <a target="_blank"
+                class="text-emerald-400 underline"
+                href="https://www.linkedin.com/posts/green-ai-uppa_pr%C3%A9sentation-de-thomas-et-d%C3%A9mo-de-son-application-activity-6950086315581300736-2i60?utm_source=linkedin_share&utm_medium=member_desktop_web">ICI</a>.
+        </p>
+    </div>
 
-            <footer class="text-center bg-light" style="width: 100%; border-top: 1px solid grey;">
-                <div class="small text-muted">
-                    <small>Ce(tte) œuvre est mise à disposition selon les termes de la <a class="link-success" rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Licence Creative Commons Attribution - Pas d'Utilisation Commerciale - Pas de Modification 4.0 International</a>.</small>
-                </div>
-            </footer>
-        </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-    </body>
-</html>
+    <div>
+        <h3 class="font-bold text-3xl pb-3 text-gray-800">Comment participer ?
+        </h3>
+        <p>
+            Actuellement notre base de données compte {{ content_list.count }} contenus. L'objectif est
+            d'augmenter ce chiffre autant que possible. Si le projet vous intéresse, vous pouvez devenir
+            contributeur et donc nous aider à agrémenter notre base de données. Pour ce faire, il vous suffit
+            d'envoyer un mail à <a class="text-emerald-400 underline"
+                href="mailto:contact@la-derniere-bibliotheque.org">contact@la-derniere-bibliotheque.org</a> en y
+            expliquant vos motivations, et nous vous
+            répondrons avec grand plaisir.
+        </p>
+    </div>
+
+    <div>
+        <h3 class="font-bold text-3xl pb-3 text-gray-800">Qui sommes-nous ?</h3>
+        <p>
+            L'équipe GreenAI UPPA est un laboratoire engagé qui améliore les algorithmes
+            d'apprentissage automatique de pointe. Soucieux de notre impact sur la
+            terre, nous développons des algorithmes basse consommation et relevons les
+            défis environnementaux. Contrairement à d'autres groupes de recherche, nos
+            activités sont dédiées à l'ensemble du pipeline, des bases mathématiques au
+            prototype R&D et au déploiement en production avec des partenaires
+            industriels. Nous sommes basés à Pau, en France, face aux Pyrénées.<br />
+            Notre site : <a class="text-emerald-400 underline" href="https://greenai-uppa.github.io/"
+                target="_blank">https://greenai-uppa.github.io/</a>
+        </p>
+    </div>
+</section>
+{% endif %}
+
 <script>
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     '{% if sujet == "contribute" %}'
-        var n1 = '{{ nombre_contenu_ntirel }}';
-        var n2 = '{{ nombre_contenu_sloustau }}';
-        var n3 = '{{ nombre_contenu_slebeaud }}';
-        var n4 = '{{ nombre_contenu_tpoupon }}';
-        var barWidth1 = 100;
-        var barWidth2 = 100;
-        var barWidth3 = (n3*100)/100;
-        var barWidth4 = (n4*100)/100;
-        window.onload = function() {
-            document.getElementById('bar1').style.width = barWidth1+'%';
-            document.getElementById('bar2').style.width = barWidth2+'%';
-            document.getElementById('bar3').style.width = barWidth3+'%';
-            document.getElementById('bar4').style.width = barWidth4+'%';
-        }
+    var n1 = '{{ nombre_contenu_ntirel }}';
+    var n2 = '{{ nombre_contenu_sloustau }}';
+    var n3 = '{{ nombre_contenu_slebeaud }}';
+    var n4 = '{{ nombre_contenu_tpoupon }}';
+    var barWidth1 = 100;
+    var barWidth2 = 100;
+    var barWidth3 = (n3 * 100) / 100;
+    var barWidth4 = (n4 * 100) / 100;
+    window.onload = function () {
+        document.getElementById('bar1').style.width = barWidth1 + '%';
+        document.getElementById('bar2').style.width = barWidth2 + '%';
+        document.getElementById('bar3').style.width = barWidth3 + '%';
+        document.getElementById('bar4').style.width = barWidth4 + '%';
+    }
     '{% endif %}'
 </script>
+{% endblock %}

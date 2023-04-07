@@ -1,157 +1,91 @@
-<!DOCTYPE html>
-<html style="height: 100%;">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Les sources</title>
-        <!--<link href="https://useiconic.com/open/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    </head>
-    <body style="height: 100%;">
-        <div style="min-height: 100%; position: relative; bottom: 0;">
-            <div id="grand_ecran" class="text-bg-light p-3 sticky-top" style="display: none;">
-                <a href="/partage"><img src="https://raw.githubusercontent.com/GreenAI-Uppa/GreenAI-Uppa.github.io/main/assets/horizontal_dark_logo.png" class="img-fluid" style="width: 20%;" alt=""></a>
-                <a href="/partage"><button type="button" class="btn btn-outline-success">Accueil</button></a>
-                <a href="/partage/jeu/"><button type="button" class="btn btn-outline-success">Jouer</button></a>
-                <a href="/partage/tags"><button type="button" class="btn btn-outline-success">Les tags</button></a>
-                <a href="/partage/rechercher/"><button type="button" class="btn btn-outline-success">Rechercher</button></a>
-                <a href="/partage/sources/allsources/"><button type="button" class="btn btn-outline-success">Nos sources</button></a>
-                <!--<a href="/partage/more/contribute/"><button type="button" class="btn btn-outline-success">Contribuer</button></a>-->
-                <a href="/partage/more/leProjet/"><button type="button" class="btn btn-outline-success">Le projet</button></a>
+{% extends "base.html" %}
+
+{% block title %}Sources{% endblock %}
+
+{% block content %}
+
+{% if allsources %}
+<section class="py-14">
+    <h1 class="text-5xl text-center font-bold text-gray-800 pb-16">Nos sources</h1>
+    {% if source_list %}
+    <ul class="w-3/4 mx-auto">
+        {% for source in source_list %}
+        <li class="list-disc py-2"><a class="hover:text-emerald-400 transition-all duration-300 font-bold text-xl"
+                href="/partage/sources/{{ source }}">
+                {{ source.titre }}
+            </a>
+            <p>Auteurs :
+                {% for auteur in source.auteur.all %}
+                <a class="bg-emerald-400 py-[2px] px-1 rounded-md text-sm font-medium text-white"
+                    href="/partage/author/{{ auteur }}">
+                    {{ auteur }}</a>
+                {% endfor %}
+            </p>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="text-center">No sources are available.</p>
+    {% endif %}
+    {% endif %}
+
+    {% if oneSource %}
+    <h1 class="text-5xl text-center font-bold text-gray-800 py-14">Toutes les références</h1>
+    {% if content_list %}
+    {% for content in content_list %}
+    {% if content.source.titre == source %}
+    <div class="bg-white rounded-2xl px-6 py-4 shadow-3xl my-10">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <a class="text-2xl text-gray-800 font-medium block w-fit" href="/partage/sources/{{ content.source }}">
+                    {{content.source }}</a>
+                <p>|</p>
+                {% for author in content.source.auteur.all %}
+                <a class="text-sm px-1 py-[2px] rounded-md bg-gray-100 hover:bg-gray-200 transition-all"
+                    href="/partage/author/{{ author }}">
+                    {{ author }}</a>
+                {% endfor %}
             </div>
 
-            <div id="petit_ecran" style="display: none;" class="sticky-top">
-                <nav class="navbar navbar-expand-lg bg-light">
-                    <div class="container-fluid">
-                        <a class="navbar-brand" href="/partage">
-                            <img src="https://raw.githubusercontent.com/GreenAI-Uppa/GreenAI-Uppa.github.io/main/assets/horizontal_dark_logo.png" class="img-fluid" width="160" alt="">
-                        </a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                            <div class="navbar-nav">
-                                <a class="nav-link" href="/partage">Accueil</a>
-                                <a class="nav-link" href="/partage/jeu/">Jouer</a>
-                                <a class="nav-link" href="/partage/tags/">Les tags</a>
-                                <a class="nav-link" href="/partage/rechercher/">Rechercher</a>
-                                <a class="nav-link active" aria-current="page" href="/partage/sources/allsources/">Nos sources</a>
-                                <!--<a class="nav-link" href="/partage/more/contribute/">Contribuer</a>-->
-                                <a class="nav-link" href="/partage/more/leProjet/">Le projet</a>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-                
-            </div>
 
-            <script>
-                var grand_ecran = document.getElementById('grand_ecran');
-                var petit_ecran = document.getElementById('petit_ecran');
-                if (screen.width > 800) {
-                    grand_ecran.style.display = 'block';
-                    petit_ecran.style.display = 'none';
-                } else {
-                    petit_ecran.style.display = 'block';
-                    grand_ecran.style.display = 'none';
-                }
-            </script>
-            {% if allsources %}
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title">Les sources</h3>
-                        <br>
-                        {% if source_list %}
-                            {% for source in source_list %}
-                                <a href="/partage/sources/{{ source }}"><button type="button" class="btn btn-outline-dark btn-sm">{{ source.titre }}</button></a>
-                                <p>Auteurs : 
-                                {% for auteur in source.auteur.all %}
-                                    <a href="/partage/author/{{ auteur }}"><span class="badge text-bg-light">{{ auteur }}</span></a>
-                                {% endfor %}</p>
-                            {% endfor %}
-                        {% else %}
-                            <p>No sources are available.</p>
-                        {% endif %}
-                    </div>
-                </div>
-            {% endif %}
-
-            {% if oneSource %}
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title">{{ source }}</h3>
-                        {% if content_list %}
-                            {% for content in content_list %}
-                                {% if content.source.titre == source %}
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ content.source }}
-                                                {% if content in content_http_list %}
-                                                    <a href="{{ content.location }}" target="_blank" style="color: black;"><button type="button" class="btn">
-                                                    lien</button></a>  
-                                                {% else %}
-                                                    <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ content.location }}">
-                                                    Marque page</button>
-                                                {% endif %}
-                                            </h5>
-                                            <h6 class="card-subtitle text-muted mb-2">
-                                                {% for author in content.source.auteur.all %}
-                                                    <a href="/partage/author/{{ author }}"><span class="badge text-bg-light">{{ author }}</span></a>
-                                                {% endfor %}
-                    
-                                            </h6>
-                                            <p class="card-text">{{ content.text|linebreaks }}</p>
-                                            <div id="tags">
-                                                {% for letag in content.tag.all %}
-                                                <a href="/partage/{{ letag }}/contenus/"><span class="badge text-bg-success">{{ letag }}</span></a>
-                                                {% endfor %}
-                                                {% if texte.is_easy is True %}
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-universal-access" viewBox="0 0 16 16">
-  <path d="M9.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM6 5.5l-4.535-.442A.531.531 0 0 1 1.531 4H14.47a.531.531 0 0 1 .066 1.058L10 5.5V9l.452 6.42a.535.535 0 0 1-1.053.174L8.243 9.97c-.064-.252-.422-.252-.486 0l-1.156 5.624a.535.535 0 0 1-1.053-.174L6 9V5.5Z"/>
-</svg>
-                                            {% endif %}
-                                            </div>
-                                            <br>
-                                            <a href="/../admin/partage/content/{{ content.id }}/change/" target="_blank"><svg style="color: black;" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                            </svg></a>
-                                            <svg id="button_upload_{{ content.id }}" style="cursor: pointer;" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
-                                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                                <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
-                                            </svg>
-                                            <script>
-                                                var btnUpload = document.getElementById('button_upload_{{ content.id }}');
-
-                                                btnUpload.addEventListener('click', function(event) {
-                                                    var lien = "https://la-derniere-bibliotheque.org/partage/next/{{ content.id }}/";
-                                                    navigator.clipboard.writeText(lien).then(function() {
-                                                        alert("Le lien a été copié dans le presse papier !");
-                                                    }, function(err) {
-                                                        alert("ERREUR : le lien n'a pas été copié dans le presse papier !");
-                                                    });
-                                                });
-                                            </script>
-                                        </div>
-                                    </div><br>          
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                </div>
-            {% endif %}
-            
-            <footer class="text-center bg-light" style="width: 100%; border-top: 1px solid grey;">
-                <div class="small text-muted">
-                    <small>Ce(tte) œuvre est mise à disposition selon les termes de la <a class="link-success" rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Licence Creative Commons Attribution - Pas d'Utilisation Commerciale - Pas de Modification 4.0 International</a>.</small>
-                </div>
-            </footer>
+            <ul class="flex gap-5 text-2xl">
+                {% if content %}
+                {% if content in content_http_list %}
+                <li>
+                    <a href="{{ content.location }}" target="_blank">
+                        <i
+                            class="bi bi-link-45deg text-gray-700 hover:!text-cyan-400 transition-all cursor-pointer"></i>
+                    </a>
+                </li>
+                {% else %}
+                <li title="{{ content.location }}"
+                    class="text-gray-700 hover:text-blue-400 transition-all cursor-pointer">
+                        <i class="bi bi-info-circle-fill"></i>
+                    </a>
+                </li>
+                {% endif %}
+                <li><a href="/../admin/partage/content/{{ content.id }}/change/" target="_blank">
+                        <i class="bi bi-pen-fill text-gray-700 hover:text-yellow-400 transition-all cursor-pointer"></i>
+                    </a></li>
+                <li class="text-gray-700 hover:text-red-400 transition-all cursor-pointer"><i
+                        class="bi bi-clipboard-check"></i></li>{% endif %}
+            </ul>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-    </body>
-</html>
-<script>
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-</script>
-<!--position: absolute; bottom: 0;-->
+        <p class="py-2">{{ content.text|linebreaks }}</p>
+
+        <div class="flex gap-2 mt-2">
+            Tags :
+            {% for letag in content.tag.all %}
+            <a class="text-sm px-1 py-[2px] rounded-md bg-emerald-400 hover:bg-emerald-500 transition-all text-white"
+                href="/partage/{{ letag }}/contenus/">
+                {{ letag }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</section>
+{% endif %}
+
+{% endblock %}

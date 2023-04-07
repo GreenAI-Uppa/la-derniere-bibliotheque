@@ -1,3 +1,5 @@
 db.sqlite3
 models/
 bddEnv/settings.py
+bddEnv/__pycache__
+bddEnv/partage/__pycache__

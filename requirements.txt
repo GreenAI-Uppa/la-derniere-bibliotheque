@@ -8,3 +8,5 @@ fasttext
 umap-learn
 typing_extensions
 django-tailwind
+django-admin_extra_buttons
+codecarbon

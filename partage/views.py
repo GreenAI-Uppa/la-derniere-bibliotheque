@@ -17,6 +17,13 @@ from sklearn.decomposition import PCA
 import umap
 from django.template import RequestContext
 from codecarbon import EmissionsTracker
+from tqdm import tqdm 
+from scipy import spatial
+from sentence_transformers import SentenceTransformer
+from sentence_transformers import util
+import os
+
+import torch
 
 fasttext.FastText.eprint = lambda x: None
 
@@ -367,6 +374,50 @@ def rechercheSentence(request, sentence):
         'content_http_list': content_http_list,
         'distance': distances,
     }
+    return render(request, 'partage/rechercher.html', context)
+
+def embed_sentence(sentence, model):
+    """
+    sentence embedding
+    """
+    e = model.encode(sentence)
+    return e #e.cpu().detach().numpy()
+
+
+
+
+def rechercheTransformers(request, sentence):
+    n_voisin = 5 # nombre de voisins les plus proches à afficher
+
+    model =  SentenceTransformer("dangvantuan/sentence-camembert-large", cache_folder='/home/nicolas/Documents/GreenAI/huggingface_cache')
+
+    contents = json.load(open('partage/all_contents.json'))
+    
+    ### BUILD TRANSFORMERS FOR EACH SENTENCE
+    embed_cont = {}
+    for i, con in tqdm(contents.items()):
+        embed_cont[i] = embed_sentence(con, model)
+
+    embed_q = embed_sentence(sentence, model)
+    preds = sorted([ (util.cos_sim(embed_q, embed_c), i) for (i,embed_c) in embed_cont.items()], reverse=True)[:n_voisin]
+
+    distances = [ sc for (sc,_) in preds]
+    tab_content = [ int(i) for (_,i) in preds]
+
+    content_http_list = Content.objects.filter(location__startswith="http") # liste de tous les contenus provenant de sites internet
+    # On charge tous les contenus que l'on met dans la variable contents
+    with open('partage/data.json', 'r') as json_file:
+        data = json.load(json_file)
+    contents = data['Content']
+    
+    context = {
+        'sentence': sentence,
+        'tab_content': tab_content,
+        'content_list': content_list,
+        'content_http_list': content_http_list,
+        'distance': distances,
+    }
+
     return render(request, 'partage/rechercher.html', context)
 
 ## jeu() est la page d'accueil des jeux

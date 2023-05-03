@@ -133,22 +133,27 @@
             <div id="bloc_jeu_grand_ecran_{{ forloop.counter0 }}" style="display: none;">
                 <div class="flex justify-center gap-x-10 mt-4">
                     {% if affichage_rand == 0 %}
-                        <div class="card" id="rep1_{{ forloop.counter0 }}" onclick="select(this.id)">                                
+                    <div class="col-5">
+                        <div class="card" id="rep1_{{ forloop.counter0 }}" onclick="select(this.id)" style="padding: 15px; border: 2px solid gray">                                
                                 <p class="card-text text-center">{{ content.text }}</p>
                         </div>
-                        <div class="card" id="rep2_{{ forloop.counter0 }}" onclick="select(this.id)">
+                    </div>
+                    <div class="col-5">
+                        <div class="card" id="rep2_{{ forloop.counter0 }}" onclick="select(this.id)" style="padding: 15px; border: 2px solid gray">
                                 <p class="card-text text-center">{{ content.text_game }}</p>
                         </div>
+                    </div>
+                    </div>
                     {% else %}
                     <div class="col-5">
-                        <div class="card" id="rep1_{{ forloop.counter0 }}" onclick="select(this.id)">
+                        <div class="card" id="rep1_{{ forloop.counter0 }}" onclick="select(this.id)" style="padding: 15px; border: 2px solid gray">
                             <div class="card-body">
                                 <p class="card-text text-center">{{ content.text_game }}</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-5">
-                        <div class="card" id="rep2_{{ forloop.counter0 }}" onclick="select(this.id)">
+                        <div class="card" id="rep2_{{ forloop.counter0 }}" onclick="select(this.id)" style="padding: 15px; border: 2px solid gray">
                             <div class="card-body">
                                 <p class="card-text text-center">{{ content.text }}</p>
                             </div>
@@ -248,8 +253,10 @@
                             <a href="/../admin/partage/content/{{ content.id }}/change/" target="_blank"><i
                                     class="bi bi-pen-fill text-gray-700 hover:text-yellow-400 transition-all cursor-pointer"></i></a>
                         </li>
-                        <li class="text-gray-700 hover:text-red-400 transition-all cursor-pointer"><i
-                                class="bi bi-clipboard-check"></i></li>
+                        <li>
+                            <a href="/../partage/next/{{ content.id }}/" target="_blank"><i
+                                class="bi bi-share text-gray-700 hover:text-red-400 transition-all cursor-pointer"></i></a>
+                            </li>
                     </ul>
                 </div>
                 <p class="py-2">{{ content.text|linebreaks }}</p>
@@ -302,8 +309,10 @@
                             <a href="/../admin/partage/content/{{ content.id }}/change/" target="_blank"><i
                                     class="bi bi-pen-fill text-gray-700 hover:text-yellow-400 transition-all cursor-pointer"></i></a>
                         </li>
-                        <li class="text-gray-700 hover:text-red-400 transition-all cursor-pointer"><i
-                                class="bi bi-clipboard-check"></i></li>
+                        <li>
+                            <a href="/../partage/next/{{ content.id }}/" target="_blank"><i
+                                class="bi bi-share text-gray-700 hover:text-red-400 transition-all cursor-pointer"></i></a>
+                            </li>
                     </ul>
                 </div>
                 <p class="py-2">{{ content.text|linebreaks }}</p>
@@ -457,7 +466,7 @@
             if (clicked_id == `rep1_${looper}`) {
                 var rep2 = document.getElementById(`rep2_${looper}`);
                 if (rep2.style.border == "2px solid green") {
-                    rep2.style.border = "";
+                    rep2.style.border = "2px solid gray";
                 }
                 rep.style.border = "2px solid green";
                 button.disabled = false;
@@ -465,7 +474,7 @@
             if (clicked_id == `rep2_${looper}`) {
                 var rep1 = document.getElementById(`rep1_${looper}`);
                 if (rep1.style.border == "2px solid green") {
-                    rep1.style.border = "";
+                    rep1.style.border = "2px solid gray";
                 }
                 rep.style.border = "2px solid green";
                 button.disabled = false;
@@ -478,7 +487,7 @@
             if (clicked_id == `rep1_p_${looper}`) {
                 var rep2 = document.getElementById(`rep2_p_${looper}`);
                 if (rep2.style.border == "2px solid green") {
-                    rep2.style.border = "";
+                    rep2.style.border = "2px solid gray";
                 }
                 rep.style.border = "2px solid green";
                 button.disabled = false;
@@ -486,7 +495,7 @@
             if (clicked_id == `rep2_p_${looper}`) {
                 var rep1 = document.getElementById(`rep1_p_${looper}`);
                 if (rep1.style.border == "2px solid green") {
-                    rep1.style.border = "";
+                    rep1.style.border = "2px solid gray";
                 }
                 rep.style.border = "2px solid green";
                 button.disabled = false;

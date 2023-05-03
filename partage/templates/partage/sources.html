@@ -67,8 +67,10 @@
                 <li><a href="/../admin/partage/content/{{ content.id }}/change/" target="_blank">
                         <i class="bi bi-pen-fill text-gray-700 hover:text-yellow-400 transition-all cursor-pointer"></i>
                     </a></li>
-                <li class="text-gray-700 hover:text-red-400 transition-all cursor-pointer"><i
-                        class="bi bi-clipboard-check"></i></li>{% endif %}
+                    <li>
+                        <a href="/../partage/next/{{ content.id }}/" target="_blank"><i
+                            class="bi bi-share text-gray-700 hover:text-red-400 transition-all cursor-pointer"></i></a>
+                        </li>{% endif %}
             </ul>
         </div>
         <p class="py-2">{{ content.text|linebreaks }}</p>

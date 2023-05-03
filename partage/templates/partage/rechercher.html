@@ -6,7 +6,7 @@
 <section class="py-20">
     <div class="pb-10 text-center w-3/4 mx-auto">
         <h3 class="text-2xl font-medium text-emerald-400 uppercase tracking-[1em] mb-2">Recherche</h3>
-        <h1 class="font-bold text-5xl text-gray-800 leading-none">Trouvez votre bonheur parmi nos milliers de ressources
+        <h1 class="font-bold text-5xl text-gray-800 leading-none">Trouvez votre bonheur parmi nos ressources
             disponibles</h1>
 
         <form class="mt-10" onsubmit="event.preventDefault(); envoyer();">
@@ -69,8 +69,10 @@
                 <li><a href="/../admin/partage/content/{{ c.id }}/change/" target="_blank">
                         <i class="bi bi-pen-fill text-gray-700 hover:text-yellow-400 transition-all cursor-pointer"></i>
                     </a></li>
-                <li class="text-gray-700 hover:text-red-400 transition-all cursor-pointer"><i
-                        class="bi bi-clipboard-check"></i></li>
+                    <li>
+                        <a href="/../partage/next/{{ c.id }}/" target="_blank"><i
+                            class="bi bi-share text-gray-700 hover:text-red-400 transition-all cursor-pointer"></i></a>
+                        </li>
             </ul>
         </div>
         <p class="py-2">{{ c.text|linebreaks }}</p>

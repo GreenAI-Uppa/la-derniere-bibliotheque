@@ -40,7 +40,7 @@
             <a href="/partage/more/leProjet/"
                 class="bg-emerald-400 rounded-lg py-3 px-5 text-xl block w-fit text-white shadow-3xl hover:bg-emerald-500 transition-all"><i
                     class="bi bi-boxes"></i>
-                Découvrir</a>
+                Découvrir le projet</a>
             <a href="/partage/rechercher/"
                 class="bg-white rounded-lg py-3 px-5 text-xl block w-fit shadow-3xl hover:bg-gray-200 transition-all"><i
                     class="bi bi-search"></i> Rechercher</a>
@@ -77,8 +77,10 @@
                     <a href="/../admin/partage/content/{{ texte.id }}/change/" target="_blank"><i
                             class="bi bi-pen-fill text-gray-700 hover:text-yellow-400 transition-all cursor-pointer"></i></a>
                 </li>
-                <li class="text-gray-700 hover:text-red-400 transition-all cursor-pointer"><i
-                        class="bi bi-clipboard-check"></i></li>
+                <li>
+                    <a href="/../partage/next/{{ texte.id }}/" target="_blank"><i
+                        class="bi bi-share text-gray-700 hover:text-red-400 transition-all cursor-pointer"></i></a>
+                    </li>
             </ul>
         </div>
         <p class="py-2">{{ texte.text|linebreaks }}</p>

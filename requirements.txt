@@ -10,3 +10,4 @@ typing_extensions
 django-tailwind
 django-admin_extra_buttons
 codecarbon
+tailwind
